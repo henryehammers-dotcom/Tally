@@ -21,6 +21,7 @@ export default function Welcome() {
 
   return (
     <div
+      data-debug-target
       style={{
         // Was minHeight: '100dvh'. #root is ALSO sized to 100dvh — two
         // independent dvh calculations at different DOM depths can

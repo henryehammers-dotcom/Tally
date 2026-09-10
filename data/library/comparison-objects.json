@@ -1,0 +1,14 @@
+[
+  { "id": "polar-bear", "name": "Polar Bear", "weightLbs": 1000 },
+  { "id": "pickup-truck", "name": "Pickup Truck", "weightLbs": 5000 },
+  { "id": "african-elephant", "name": "African Elephant", "weightLbs": 13000 },
+  { "id": "t-rex", "name": "T. Rex", "weightLbs": 20000 },
+  { "id": "school-bus", "name": "School Bus", "weightLbs": 25000 },
+  { "id": "humpback-whale", "name": "Humpback Whale", "weightLbs": 55000 },
+  { "id": "mgm-bronze-lion", "name": "MGM Bronze Lion", "weightLbs": 100000 },
+  { "id": "blue-whale", "name": "Blue Whale", "weightLbs": 200000 },
+  { "id": "boeing-747", "name": "Empty Boeing 747", "weightLbs": 400000 },
+  { "id": "statue-of-liberty", "name": "Statue of Liberty", "weightLbs": 500000 },
+  { "id": "cumulus-cloud", "name": "Cumulus Cloud", "weightLbs": 1000000 },
+  { "id": "saturn-v-rocket", "name": "Saturn V Rocket", "weightLbs": 6200000 }
+]

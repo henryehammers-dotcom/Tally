@@ -1,0 +1,10 @@
+[
+  { "muscleGroup": "Chest", "color": "#1fff93" },
+  { "muscleGroup": "Arms", "color": "#ff751f" },
+  { "muscleGroup": "Back", "color": "#0cc0df" },
+  { "muscleGroup": "Shoulders", "color": "#ffa51f" },
+  { "muscleGroup": "Legs", "color": "#ff1fa9" },
+  { "muscleGroup": "Full Body", "color": "#bc3fde" },
+  { "muscleGroup": "Cardio", "color": "#ff3a3a" },
+  { "muscleGroup": "Core", "color": "#1f48ff" }
+]

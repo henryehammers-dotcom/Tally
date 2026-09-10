@@ -1,0 +1,35 @@
+.rename-input {
+  width: 100%;
+  background: var(--off-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.color-swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+
+.color-swatch-selected {
+  border-color: var(--black);
+}
+
+.popup-error {
+  margin-top: 10px;
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 600;
+}

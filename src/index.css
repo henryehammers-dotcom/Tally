@@ -1,0 +1,122 @@
+:root {
+  /* Palette — from color reference doc */
+  --hot-pink: #ff1fa9;
+  --purple: #bc3fde;
+  --red: #ff3a3a;
+  --orange: #ff751f;
+  --amber: #ffa51f;
+  --green: #1fff93;
+  --cyan: #0cc0df;
+  --blue: #1f48ff;
+  --white: #ffffff;
+  --off-white: #ecebe6;
+  --black: #111111;
+
+  /* Semantic aliases, so components read by intent, not raw hex */
+  --color-checkmark: var(--green);
+  --color-nav-active: var(--off-white);
+  --color-units-indicator: var(--red);
+  --color-avatar-bg: var(--green);
+  --color-pr-card: var(--hot-pink);
+  --color-avg-session-card: var(--amber);
+  --color-gauge-marker: var(--cyan);
+  --color-total-weight-number: var(--red);
+  --color-streak-card: var(--green);
+  --color-days-logged-card: var(--purple);
+  --color-library-toggle: var(--off-white);
+  --color-calendar-arrows: var(--orange);
+  --color-timer-circle: var(--amber);
+  --color-timer-start: var(--green);
+  --color-timer-stop: var(--red);
+  --color-music-highlight: var(--red);
+  --color-rest-arc: var(--blue);
+  --color-danger-button: var(--red);
+
+  /* Muscle groups */
+  --color-chest: #1fff93;
+  --color-arms: #ff751f;
+  --color-back: #0cc0df;
+  --color-shoulders: #ffa51f;
+  --color-legs: #ff1fa9;
+  --color-full-body: #bc3fde;
+  --color-cardio: #ff3a3a;
+  --color-core: #1f48ff;
+
+  /* Layout */
+  --radius-card: 20px;
+  --radius-pill: 999px;
+  --shadow-card: 0 5px 12px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--black);
+  background: var(--white);
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  /* FIX: was `height: 100%`, which resolves against body's 100% — not
+     the true dynamic mobile viewport. On phones with a visible address
+     bar, that left #root shorter than the real screen, so full-bleed
+     screens (like Welcome, which correctly used 100dvh on its own inner
+     div) overflowed #root's box, exposing white space above/around it.
+     Sizing #root itself to 100dvh fixes it at the source. */
+  height: 100dvh;
+  min-height: 100%;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+  background: var(--white);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input {
+  font-family: inherit;
+  /* iOS Safari auto-zooms into any input with font-size under 16px on
+     focus. This is a hard floor for every input in the app, so this bug
+     can't silently reappear on some future field. */
+  font-size: 16px;
+}
+
+/* Base layout for every screen. This used to live only in Home.css and
+   "worked" elsewhere purely by accident of import order — Library,
+   RoutinePage, and LogPage never actually had these rules, which is why
+   Library's content could run past the right edge of the viewport with
+   no horizontal safety net. Belongs here, globally, once. */
+.screen {
+  padding: 24px 20px 100px;
+  min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.no-select {
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+  touch-action: none;
+}

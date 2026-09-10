@@ -1,0 +1,146 @@
+[
+  {
+    "id": "preset-push",
+    "name": "Push",
+    "color": "#0cc0df",
+    "description": "Chest, shoulders, and triceps",
+    "exercises": [
+      { "exerciseId": "barbell-bench-press", "sets": 3, "reps": "6-8", "rest": "2 min" },
+      { "exerciseId": "dumbbell-shoulder-press", "sets": 3, "reps": "10-12", "rest": "60 sec" },
+      { "exerciseId": "incline-dumbbell-fly", "sets": 3, "reps": "10-12", "rest": "60 sec" },
+      { "exerciseId": "dumbbell-lateral-raise", "sets": 3, "reps": "12-15", "rest": "45 sec" },
+      { "exerciseId": "cable-tricep-pushdown", "sets": 3, "reps": "10-12", "rest": "45 sec" }
+    ]
+  },
+  {
+    "id": "preset-pull",
+    "name": "Pull",
+    "color": "#ff1fa9",
+    "description": "Back and biceps",
+    "exercises": [
+      { "exerciseId": "pull-up", "sets": 3, "reps": "3-5", "rest": "75 sec" },
+      { "exerciseId": "barbell-row", "sets": 3, "reps": "8-10", "rest": "90 sec" },
+      { "exerciseId": "seated-cable-row", "sets": 3, "reps": "10-12", "rest": "90 sec" },
+      { "exerciseId": "face-pull", "sets": 3, "reps": "12-15", "rest": "60 sec" },
+      { "exerciseId": "dumbbell-curl", "sets": 3, "reps": "10-12", "rest": "45 sec" }
+    ]
+  },
+  {
+    "id": "preset-legs",
+    "name": "Legs",
+    "color": "#ffa51f",
+    "description": "Quads, hamstrings, glutes, and calves",
+    "exercises": [
+      { "exerciseId": "barbell-back-squat", "sets": 3, "reps": "6-8", "rest": "2-3 min" },
+      { "exerciseId": "barbell-romanian-deadlift", "sets": 3, "reps": "8-10", "rest": "2 min" },
+      { "exerciseId": "leg-press-machine", "sets": 3, "reps": "10-12", "rest": "90 sec" },
+      { "exerciseId": "leg-curl-machine", "sets": 3, "reps": "12-15", "rest": "60 sec" },
+      { "exerciseId": "dumbbell-calf-raise", "sets": 3, "reps": "15-20", "rest": "45 sec" }
+    ]
+  },
+  {
+    "id": "preset-upper",
+    "name": "Upper",
+    "color": "#bc3fde",
+    "description": "Full upper body in one session",
+    "exercises": [
+      { "exerciseId": "barbell-bench-press", "sets": 3, "reps": "6-8", "rest": "2 min" },
+      { "exerciseId": "barbell-row", "sets": 3, "reps": "8-10", "rest": "90 sec" },
+      { "exerciseId": "dumbbell-shoulder-press", "sets": 3, "reps": "10-12", "rest": "60 sec" },
+      { "exerciseId": "lat-pulldown", "sets": 3, "reps": "10-12", "rest": "90 sec" },
+      { "exerciseId": "dumbbell-curl", "sets": 2, "reps": "10-12", "rest": "45 sec" },
+      { "exerciseId": "cable-tricep-pushdown", "sets": 2, "reps": "10-12", "rest": "45 sec" }
+    ]
+  },
+  {
+    "id": "preset-lower",
+    "name": "Lower",
+    "color": "#1fff93",
+    "description": "Full lower body in one session",
+    "exercises": [
+      { "exerciseId": "barbell-back-squat", "sets": 3, "reps": "6-8", "rest": "2-3 min" },
+      { "exerciseId": "barbell-hip-thrust", "sets": 3, "reps": "8-10", "rest": "90 sec" },
+      { "exerciseId": "bulgarian-split-squat", "sets": 3, "reps": "10-12", "rest": "90 sec" },
+      { "exerciseId": "leg-curl-machine", "sets": 3, "reps": "12-15", "rest": "60 sec" },
+      { "exerciseId": "calf-raise-machine", "sets": 3, "reps": "15-20", "rest": "45 sec" }
+    ]
+  },
+  {
+    "id": "preset-chest",
+    "name": "Chest",
+    "color": "#1f48ff",
+    "description": "Chest-focused isolation day",
+    "exercises": [
+      { "exerciseId": "barbell-bench-press", "sets": 4, "reps": "6-8", "rest": "2 min" },
+      { "exerciseId": "incline-dumbbell-bench-press", "sets": 3, "reps": "10-12", "rest": "60 sec" },
+      { "exerciseId": "dumbbell-fly", "sets": 3, "reps": "10-12", "rest": "60 sec" },
+      { "exerciseId": "cable-crossover", "sets": 3, "reps": "12-15", "rest": "60 sec" },
+      { "exerciseId": "push-up", "sets": 2, "reps": "12-15", "rest": "60 sec" }
+    ]
+  },
+  {
+    "id": "preset-arms",
+    "name": "Arms",
+    "color": "#ff751f",
+    "description": "Biceps and triceps focused",
+    "exercises": [
+      { "exerciseId": "barbell-curl", "sets": 3, "reps": "8-10", "rest": "60 sec" },
+      { "exerciseId": "close-grip-bench-press", "sets": 3, "reps": "8-10", "rest": "90 sec" },
+      { "exerciseId": "hammer-curl", "sets": 3, "reps": "10-12", "rest": "45 sec" },
+      { "exerciseId": "cable-tricep-pushdown", "sets": 3, "reps": "10-12", "rest": "45 sec" },
+      { "exerciseId": "cable-curl", "sets": 2, "reps": "10-12", "rest": "45 sec" },
+      { "exerciseId": "cable-overhead-tricep-extension", "sets": 2, "reps": "10-12", "rest": "60 sec" }
+    ]
+  },
+  {
+    "id": "preset-shoulders",
+    "name": "Shoulders",
+    "color": "#ffa51f",
+    "description": "Full deltoid development, front to rear",
+    "exercises": [
+      { "exerciseId": "barbell-overhead-press", "sets": 3, "reps": "6-8", "rest": "2 min" },
+      { "exerciseId": "dumbbell-lateral-raise", "sets": 3, "reps": "12-15", "rest": "45 sec" },
+      { "exerciseId": "dumbbell-front-raise", "sets": 3, "reps": "12-15", "rest": "45 sec" },
+      { "exerciseId": "dumbbell-rear-delt-fly", "sets": 3, "reps": "12-15", "rest": "45 sec" },
+      { "exerciseId": "face-pull", "sets": 3, "reps": "12-15", "rest": "60 sec" }
+    ]
+  },
+  {
+    "id": "preset-back",
+    "name": "Back",
+    "color": "#0cc0df",
+    "description": "Width and thickness focused",
+    "exercises": [
+      { "exerciseId": "barbell-deadlift", "sets": 3, "reps": "5-6", "rest": "2-3 min" },
+      { "exerciseId": "pull-up", "sets": 3, "reps": "3-5", "rest": "75 sec" },
+      { "exerciseId": "barbell-row", "sets": 3, "reps": "8-10", "rest": "90 sec" },
+      { "exerciseId": "lat-pulldown", "sets": 3, "reps": "10-12", "rest": "90 sec" },
+      { "exerciseId": "straight-arm-pulldown", "sets": 2, "reps": "12-15", "rest": "60 sec" }
+    ]
+  },
+  {
+    "id": "preset-core",
+    "name": "Core",
+    "color": "#ff3a3a",
+    "description": "Full core, mix of dynamic and isometric",
+    "exercises": [
+      { "exerciseId": "hanging-leg-raise", "sets": 3, "reps": "8-12", "rest": "60 sec" },
+      { "exerciseId": "cable-crunch", "sets": 3, "reps": "12-15", "rest": "45 sec" },
+      { "exerciseId": "russian-twist", "sets": 3, "reps": "15-20 per side", "rest": "45 sec" },
+      { "exerciseId": "plank", "sets": 3, "duration": "30-45 sec", "rest": "45 sec" },
+      { "exerciseId": "dead-bug", "sets": 2, "reps": "10-12 per side", "rest": "45 sec" }
+    ]
+  },
+  {
+    "id": "preset-cardio",
+    "name": "Cardio",
+    "color": "#ff1fa9",
+    "description": "Mixed cardio for endurance and conditioning",
+    "exercises": [
+      { "exerciseId": "treadmill-run", "duration": "20 min", "distance": "2 mi" },
+      { "exerciseId": "jump-rope", "duration": "10 min" },
+      { "exerciseId": "rowing-machine", "duration": "15 min", "distance": "2000 m" },
+      { "exerciseId": "stairmaster", "duration": "15 min" }
+    ]
+  }
+]

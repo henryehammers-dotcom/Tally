@@ -1,0 +1,117 @@
+.log-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.log-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.log-title {
+  font-size: 26px;
+  font-weight: 800;
+  text-align: left;
+}
+
+.log-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.log-circle-wrap {
+  margin-top: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.log-circle-arc {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.rest-arc {
+  transition: none;
+}
+
+.rest-arc-active {
+  transition-property: stroke-dashoffset;
+  transition-timing-function: linear;
+}
+
+.log-circle-content {
+  position: relative;
+  color: white;
+  font-weight: 800;
+  font-size: 22px;
+  z-index: 1;
+}
+
+.log-summary {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #555;
+  font-weight: 600;
+}
+
+.log-info-icon {
+  color: #999;
+  font-size: 14px;
+}
+
+.log-inputs {
+  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.log-inputs-time {
+  gap: 8px;
+}
+
+.log-inputs input {
+  flex: 1;
+  min-width: 0;
+  background: var(--off-white);
+  border-radius: var(--radius-pill);
+  padding: 16px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+}
+
+.log-action-button {
+  margin-top: 24px;
+  width: 100%;
+  color: white;
+  font-weight: 800;
+  font-size: 16px;
+  padding: 18px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-card);
+}

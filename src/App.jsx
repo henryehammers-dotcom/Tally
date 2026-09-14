@@ -1,7 +1,6 @@
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { isOnboardingComplete } from './lib/storage'
 import BottomNav from './components/BottomNav'
-import DebugOverlay from './components/DebugOverlay'
 import Welcome from './screens/Welcome'
 import Home from './screens/Home'
 import Library from './screens/Library'
@@ -27,9 +26,7 @@ function AppLayout({ children }) {
 
 export default function App() {
   return (
-    <>
-      <DebugOverlay />
-      <HashRouter>
+    <HashRouter>
       <Routes>
         <Route path="/welcome" element={<Welcome />} />
         <Route
@@ -98,7 +95,6 @@ export default function App() {
         />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
-      </HashRouter>
-    </>
+    </HashRouter>
   )
 }

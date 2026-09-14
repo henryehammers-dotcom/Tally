@@ -8,12 +8,6 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      // autoUpdate fetches the new service worker in the background but,
-      // by default, only activates it on the load AFTER that — meaning
-      // one visit can still render a stale cached bundle even though a
-      // newer one is already downloaded. clientsClaim + skipWaiting force
-      // the new worker to take control immediately, and
-      // cleanupOutdatedCaches drops leftover old-version cache entries.
       workbox: {
         clientsClaim: true,
         skipWaiting: true,
@@ -24,6 +18,8 @@ export default defineConfig({
         name: 'Tally',
         short_name: 'Tally',
         description: 'Build your own routines. Track every rep.',
+        start_url: '/Tally/',
+        scope: '/Tally/',
         theme_color: '#0cc0df',
         background_color: '#0cc0df',
         display: 'standalone',

@@ -79,11 +79,8 @@
 }
 
 .history-rest-dot {
-  width: auto;
-  height: auto;
-  font-size: 8px;
+  display: flex;
   color: #999;
-  border-radius: 0;
 }
 
 .history-browse-toggle {
@@ -94,6 +91,62 @@
   border-radius: var(--radius-pill);
   padding: 4px;
   width: fit-content;
+}
+
+.history-browse-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px 0 12px;
+}
+
+.history-browse-label {
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.history-filter-wrap {
+  position: relative;
+}
+
+.history-filter-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--off-white);
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history-filter-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 150px;
+  z-index: 20;
+}
+
+.history-filter-option {
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  text-align: left;
+  color: #555;
+}
+
+.history-filter-option-active {
+  background: var(--off-white);
+  color: var(--black);
 }
 
 .history-browse-section {

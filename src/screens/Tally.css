@@ -1,0 +1,139 @@
+.tally-header {
+  font-size: 26px;
+  margin: 0 0 20px;
+}
+
+.tally-week-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.tally-week-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.tally-week-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--off-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+}
+
+.tally-week-circle-logged {
+  background: var(--color-checkmark);
+  border-color: var(--color-checkmark);
+}
+
+.tally-week-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #999;
+}
+
+.tally-card {
+  background: white;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+
+.tally-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.tally-card-title {
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.tally-see-all {
+  font-size: 12px;
+  font-weight: 700;
+  color: #999;
+}
+
+.tally-empty {
+  font-size: 13px;
+  color: #aaa;
+  font-weight: 600;
+}
+
+.tally-pr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tally-pr-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tally-big-stat {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.tally-filter-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--off-white);
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tally-gauge-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.tally-gauge-card .tally-card-header {
+  width: 100%;
+}
+
+.tally-gauge {
+  width: 100%;
+  max-width: 260px;
+}
+
+.tally-gauge-number {
+  font-size: 32px;
+  font-weight: 900;
+  margin-top: -8px;
+}
+
+.tally-gauge-caption {
+  font-size: 12px;
+  font-weight: 600;
+  color: #888;
+  margin-top: 4px;
+}
+
+.tally-bottom-pair {
+  display: flex;
+  gap: 14px;
+}
+
+.tally-half-card {
+  flex: 1;
+  text-align: center;
+}

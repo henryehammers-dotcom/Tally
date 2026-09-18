@@ -1,6 +1,7 @@
 import { getAllSessionDays } from './storage'
 import { getExerciseById } from './library'
-import { getLast7Days } from './dates'
+import { getLast7Days, getCurrentWeekDates } from './dates'
+import { getSessionsForDate } from './sessions'
 
 export function estimateOneRepMax(weight, reps) {
   if (reps <= 1) return weight
@@ -115,6 +116,23 @@ export function getAvgSessionLengthMinutes() {
   })
   if (durations.length === 0) return 0
   return Math.round(durations.reduce((a, b) => a + b, 0) / durations.length)
+}
+
+export function formatSessionLength(minutes) {
+  if (!minutes) return '0 min'
+  const hrs = Math.floor(minutes / 60)
+  const mins = Math.round(minutes % 60)
+  return hrs > 0 ? `${hrs} hr ${mins} min` : `${mins} min`
+}
+
+export function getWeekSessionLengthsByDay() {
+  return getCurrentWeekDates().map((dateKey) => {
+    const sessions = getSessionsForDate(dateKey)
+    const totalMinutes = sessions
+      .filter((s) => s.startedAt && s.endedAt)
+      .reduce((sum, s) => sum + (new Date(s.endedAt) - new Date(s.startedAt)) / 60000, 0)
+    return { dateKey, minutes: Math.round(totalMinutes) }
+  })
 }
 
 export function get7DayBarData(exerciseId, metric = 'time') {

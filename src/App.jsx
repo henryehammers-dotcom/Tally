@@ -9,7 +9,7 @@ import LogPage from './screens/LogPage'
 import Settings from './screens/Settings'
 import Timer from './screens/Timer'
 import Music from './screens/Music'
-import Placeholder from './screens/Placeholder'
+import Tally from './screens/Tally'
 
 function RequireOnboarding({ children }) {
   if (!isOnboardingComplete()) {
@@ -52,7 +52,7 @@ export default function App() {
           path="/tally"
           element={
             <RequireOnboarding>
-              <AppLayout><Placeholder name="Tally" /></AppLayout>
+              <AppLayout><Tally /></AppLayout>
             </RequireOnboarding>
           }
         />

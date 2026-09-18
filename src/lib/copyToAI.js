@@ -3,7 +3,7 @@ import { getExerciseById } from './library'
 import {
   getCurrentStreak, getBestStreak, getDaysLoggedCount, getTrackingSinceDate,
 } from './sessions'
-import { getAvgSessionLengthMinutes, getRecentPRs } from './stats'
+import { getAvgSessionLengthMinutes, getRecentPRs, formatSessionLength } from './stats'
 import { daysAgo } from './dates'
 import { experienceLabel } from './profileOptions'
 
@@ -15,13 +15,6 @@ function formatLongDate(dateKey) {
 function formatShortDate(dateKey) {
   const [y, m, d] = dateKey.split('-').map(Number)
   return new Date(y, m - 1, d).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-}
-
-function formatSessionLengthLabel(minutes) {
-  if (!minutes) return '0 min'
-  const hrs = Math.floor(minutes / 60)
-  const mins = Math.round(minutes % 60)
-  return hrs > 0 ? `${hrs} hr ${mins} min` : `${mins} min`
 }
 
 function formatSetForExport(logType, set) {
@@ -101,7 +94,7 @@ export function generateCopyToAIText() {
   lines.push(`- **Total days logged:** ${getDaysLoggedCount()}`)
   lines.push(`- **Current streak:** ${getCurrentStreak()} days`)
   lines.push(`- **Best streak:** ${getBestStreak()} days`)
-  lines.push(`- **Average session length:** ${formatSessionLengthLabel(getAvgSessionLengthMinutes())}`)
+  lines.push(`- **Average session length:** ${formatSessionLength(getAvgSessionLengthMinutes())}`)
   lines.push('')
   if (recentPRs.length > 0) {
     lines.push('### Recent Personal Records')

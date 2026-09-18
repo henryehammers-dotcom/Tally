@@ -26,6 +26,11 @@
   flex-shrink: 0;
 }
 
+.routine-picker-row-selected {
+  background: var(--black);
+  color: white;
+}
+
 .routine-picker-create {
   background: white;
   border: 1.5px dashed #ccc;

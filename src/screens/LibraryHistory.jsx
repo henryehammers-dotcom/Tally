@@ -6,12 +6,18 @@ import { getDayActivitySummary, getSessionsForDate, getLoggedEntriesForExercise 
 import { getExerciseById, ALL_EXERCISES } from '../lib/library'
 import { get7DayBarData } from '../lib/stats'
 import EditSetPopup from '../components/EditSetPopup'
+import ZzzIcon from '../components/ZzzIcon'
+import FilterIconSvg from '../components/FilterIconSvg'
 import './LibraryHistory.css'
 
 const WEEKDAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
 function ZzzDot() {
-  return <span className="history-dot history-rest-dot">z</span>
+  return (
+    <span className="history-rest-dot">
+      <ZzzIcon size={13} />
+    </span>
+  )
 }
 
 function formatSetLine(logType, set) {
@@ -57,6 +63,7 @@ export default function LibraryHistory() {
   const [distanceMode, setDistanceMode] = useState(false)
   const [editing, setEditing] = useState(null)
   const [refreshTick, setRefreshTick] = useState(0)
+  const [showBrowseMenu, setShowBrowseMenu] = useState(false)
 
   const cells = useMemo(() => getCalendarCells(cursor.year, cursor.monthIndex), [cursor, refreshTick])
 
@@ -142,13 +149,29 @@ export default function LibraryHistory() {
         })}
       </div>
 
-      <div className="history-browse-toggle">
-        <button className={`toggle-btn ${browseMode === 'routine' ? 'toggle-active' : ''}`} onClick={() => { setBrowseMode('routine'); setSelectedExerciseId(null) }}>
-          By Routine
-        </button>
-        <button className={`toggle-btn ${browseMode === 'exercise' ? 'toggle-active' : ''}`} onClick={() => setBrowseMode('exercise')}>
-          By Exercise
-        </button>
+      <div className="history-browse-header">
+        <div className="history-browse-label">{browseMode === 'routine' ? 'By Routine' : 'By Exercise'}</div>
+        <div className="history-filter-wrap">
+          <button className="history-filter-icon" onClick={() => setShowBrowseMenu((v) => !v)}>
+            <FilterIconSvg />
+          </button>
+          {showBrowseMenu && (
+            <div className="history-filter-menu">
+              <button
+                className={`history-filter-option ${browseMode === 'routine' ? 'history-filter-option-active' : ''}`}
+                onClick={() => { setBrowseMode('routine'); setSelectedExerciseId(null); setShowBrowseMenu(false) }}
+              >
+                By Routine
+              </button>
+              <button
+                className={`history-filter-option ${browseMode === 'exercise' ? 'history-filter-option-active' : ''}`}
+                onClick={() => { setBrowseMode('exercise'); setShowBrowseMenu(false) }}
+              >
+                By Exercise
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {browseMode === 'routine' && (

@@ -127,13 +127,14 @@
 
 .muscle-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px;
   width: 100%;
 }
 
 .muscle-bubble {
   aspect-ratio: 1;
+  min-width: 0;
   border-radius: 32px;
   color: white;
   font-weight: 900;
@@ -143,6 +144,9 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
   box-shadow: var(--shadow-card);
   padding: 12px;
   width: 100%;

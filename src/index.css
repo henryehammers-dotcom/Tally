@@ -106,7 +106,7 @@ input {
    Library's content could run past the right edge of the viewport with
    no horizontal safety net. Belongs here, globally, once. */
 .screen {
-  padding: 24px 20px 100px;
+  padding: calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));
   min-height: 100%;
   width: 100%;
   overflow-x: hidden;

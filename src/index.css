@@ -59,6 +59,10 @@ html, body {
   width: 100%;
   overflow-x: hidden;
   overscroll-behavior-y: none;
+  /* Blocks pinch-zoom and double-tap-to-zoom app-wide. Elements that need
+     their own gesture handling (drag-to-reorder) already set their own
+     touch-action: none via .no-select and take precedence over this. */
+  touch-action: pan-y;
 }
 
 body {

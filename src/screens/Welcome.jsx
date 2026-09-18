@@ -1,22 +1,11 @@
-import { useNavigate } from 'react-router-dom'
-import { saveProfile, setOnboardingComplete } from '../lib/storage'
+import { useState } from 'react'
+import Questionnaire from './Questionnaire'
 
 export default function Welcome() {
-  const navigate = useNavigate()
+  const [started, setStarted] = useState(false)
 
-  function quickStart() {
-    saveProfile({
-      name: 'Henry',
-      height: { ft: 5, in: 7 },
-      weight: 150,
-      units: 'lbs',
-      experienceLevel: 'just_getting_back_into_it',
-      goals: [],
-      focusAreas: [],
-      concerns: [],
-    })
-    setOnboardingComplete()
-    navigate('/library')
+  if (started) {
+    return <Questionnaire />
   }
 
   return (
@@ -45,7 +34,7 @@ export default function Welcome() {
         Helping you fulfill your workout goals is what we're all about
       </p>
       <button
-        onClick={quickStart}
+        onClick={() => setStarted(true)}
         style={{
           background: 'white',
           color: '#0cc0df',

@@ -6,6 +6,9 @@ import Home from './screens/Home'
 import Library from './screens/Library'
 import RoutinePage from './screens/RoutinePage'
 import LogPage from './screens/LogPage'
+import Settings from './screens/Settings'
+import Timer from './screens/Timer'
+import Music from './screens/Music'
 import Placeholder from './screens/Placeholder'
 
 function RequireOnboarding({ children }) {
@@ -57,7 +60,7 @@ export default function App() {
           path="/timer"
           element={
             <RequireOnboarding>
-              <AppLayout><Placeholder name="Timer" /></AppLayout>
+              <AppLayout><Timer /></AppLayout>
             </RequireOnboarding>
           }
         />
@@ -65,7 +68,7 @@ export default function App() {
           path="/music"
           element={
             <RequireOnboarding>
-              <AppLayout><Placeholder name="Music" /></AppLayout>
+              <AppLayout><Music /></AppLayout>
             </RequireOnboarding>
           }
         />
@@ -73,7 +76,7 @@ export default function App() {
           path="/settings"
           element={
             <RequireOnboarding>
-              <AppLayout><Placeholder name="Settings" /></AppLayout>
+              <AppLayout><Settings /></AppLayout>
             </RequireOnboarding>
           }
         />

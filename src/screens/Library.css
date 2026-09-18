@@ -37,6 +37,37 @@
   padding: 0;
 }
 
+.plus-button-wrap {
+  position: relative;
+}
+
+.plus-tooltip {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  width: 160px;
+  background: var(--black);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 14px;
+  text-align: left;
+  z-index: 10;
+  box-shadow: var(--shadow-card);
+}
+
+.plus-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 14px;
+  width: 12px;
+  height: 12px;
+  background: var(--black);
+  transform: rotate(45deg);
+}
+
 .plus-button {
   width: 44px;
   height: 44px;
@@ -55,6 +86,20 @@
 .back-link {
   font-weight: 700;
   font-size: 18px;
+}
+
+.filters-button {
+  background: var(--off-white);
+  border-radius: var(--radius-pill);
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #555;
+}
+
+.filters-button-active {
+  background: var(--black);
+  color: white;
 }
 
 .toggle-row {

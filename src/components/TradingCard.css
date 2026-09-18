@@ -1,0 +1,58 @@
+.trading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 32px;
+}
+
+.trading-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin-bottom: 14px;
+}
+
+.trading-name {
+  font-weight: 800;
+  font-size: 19px;
+  padding-right: 0;
+  margin-bottom: 6px;
+}
+
+.trading-muscles {
+  font-size: 13px;
+  color: #888;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.trading-targets-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.trading-info-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trading-instructions {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #888;
+  font-style: italic;
+}
+
+.trading-action {
+  width: 100%;
+}

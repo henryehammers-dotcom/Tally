@@ -1,0 +1,101 @@
+.timer-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-toggle-row {
+  display: flex;
+  gap: 8px;
+  background: var(--off-white);
+  border-radius: var(--radius-pill);
+  padding: 4px;
+  margin-bottom: 40px;
+}
+
+.timer-circle {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: var(--color-timer-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 48px;
+}
+
+.timer-clock {
+  color: white;
+  font-weight: 800;
+  font-size: 30px;
+  text-align: center;
+}
+
+.drum-scroller {
+  display: flex;
+  gap: 12px;
+}
+
+.drum-col-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.drum-col {
+  height: 120px;
+  width: 56px;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.drum-col::-webkit-scrollbar {
+  display: none;
+}
+
+.drum-item {
+  scroll-snap-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.drum-item-active {
+  color: white;
+  font-size: 24px;
+}
+
+.drum-label {
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  margin-top: 6px;
+  opacity: 0.85;
+}
+
+.timer-buttons {
+  display: flex;
+  gap: 24px;
+}
+
+.timer-btn {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 16px;
+  color: white;
+  box-shadow: var(--shadow-card);
+}
+
+.timer-btn-stop {
+  background: var(--color-timer-stop);
+}
+
+.timer-btn-start {
+  background: var(--color-timer-start);
+}

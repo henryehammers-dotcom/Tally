@@ -1,0 +1,32 @@
+.filter-group {
+  margin-top: 16px;
+}
+
+.filter-group-label {
+  font-weight: 700;
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.filter-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-chip {
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--off-white);
+  font-weight: 600;
+  font-size: 13px;
+  color: #555;
+  text-transform: capitalize;
+}
+
+.filter-chip-active {
+  background: var(--black);
+  color: white;
+}

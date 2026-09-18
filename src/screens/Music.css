@@ -1,0 +1,75 @@
+.music-screen h1 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.music-subtitle {
+  color: #888;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.eq-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 20px;
+  margin-top: 16px;
+}
+
+.eq-bar span {
+  width: 4px;
+  background: var(--color-music-highlight);
+  border-radius: 2px;
+  animation: eq-bounce 0.9s ease-in-out infinite;
+}
+
+.eq-bar span:nth-child(1) { height: 40%; animation-delay: 0s; }
+.eq-bar span:nth-child(2) { height: 100%; animation-delay: 0.15s; }
+.eq-bar span:nth-child(3) { height: 60%; animation-delay: 0.3s; }
+.eq-bar span:nth-child(4) { height: 80%; animation-delay: 0.45s; }
+
+@keyframes eq-bounce {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+
+.music-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.music-card {
+  background: white;
+  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+  text-align: left;
+  border: 2px solid transparent;
+}
+
+.music-card-active {
+  border-color: var(--color-music-highlight);
+}
+
+.music-composer-name {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.music-card-duration {
+  font-size: 13px;
+  color: #888;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.music-card-hint {
+  font-size: 12px;
+  color: #aaa;
+  font-weight: 600;
+  margin-top: 4px;
+}

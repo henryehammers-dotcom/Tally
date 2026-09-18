@@ -1,5 +1,6 @@
 import { getSessionDay, saveSessionDay, getAllSessionDays } from './storage'
 import { todayKey, daysAgo } from './dates'
+import { getRoutineById } from './routines'
 
 const ONE_HOUR_MS = 60 * 60 * 1000
 
@@ -122,9 +123,75 @@ export function getCurrentStreak() {
   return streak
 }
 
+export function getBestStreak() {
+  const all = getAllSessionDays()
+  const loggedDates = Object.keys(all).filter((k) => all[k].sessions?.length > 0).sort()
+
+  let best = 0
+  let current = 0
+  let prevDate = null
+  loggedDates.forEach((dateKey) => {
+    if (prevDate) {
+      const diffDays = Math.round((new Date(dateKey) - new Date(prevDate)) / 86400000)
+      current = diffDays === 1 ? current + 1 : 1
+    } else {
+      current = 1
+    }
+    best = Math.max(best, current)
+    prevDate = dateKey
+  })
+  return best
+}
+
+export function getTrackingSinceDate() {
+  const all = getAllSessionDays()
+  const dates = Object.keys(all).sort()
+  return dates[0] || null
+}
+
 export function getDaysLoggedCount() {
   const all = getAllSessionDays()
   return Object.values(all).filter((day) => day.sessions.length > 0).length
+}
+
+export function getDayActivitySummary(dateKey) {
+  const day = getSessionDay(dateKey)
+  if (!day) return { isRestDay: false, routines: [] }
+  if (day.isRestDay) return { isRestDay: true, routines: [] }
+
+  const seen = new Map()
+  day.sessions.forEach((s) => {
+    if (!seen.has(s.routineId)) {
+      const routine = getRoutineById(s.routineId)
+      seen.set(s.routineId, {
+        routineId: s.routineId,
+        routineName: s.routineName,
+        color: routine?.color || '#ecebe6',
+      })
+    }
+  })
+  return { isRestDay: false, routines: Array.from(seen.values()) }
+}
+
+export function getSessionsForDate(dateKey) {
+  return getSessionDay(dateKey)?.sessions || []
+}
+
+export function getLoggedEntriesForExercise(exerciseId) {
+  const all = getAllSessionDays()
+  const out = []
+  Object.entries(all).forEach(([dateKey, day]) => {
+    day.sessions?.forEach((session) => {
+      const entry = session.loggedExercises.find((e) => e.exerciseId === exerciseId)
+      if (entry) {
+        entry.sets.forEach((set, setIndex) => {
+          out.push({ dateKey, sessionId: session.id, setIndex, set, logType: entry.logType })
+        })
+      }
+    })
+  })
+  out.sort((a, b) => (b.set.loggedAt || '').localeCompare(a.set.loggedAt || ''))
+  return out
 }
 
 export function getRoutineUsageCounts() {

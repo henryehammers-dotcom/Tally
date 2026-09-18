@@ -1,0 +1,130 @@
+.settings-screen h1 {
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+
+.settings-section-label {
+  font-weight: 700;
+  font-size: 13px;
+  color: #999;
+  text-transform: uppercase;
+  margin: 20px 0 10px;
+}
+
+.profile-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: white;
+  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  text-align: left;
+}
+
+.profile-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-avatar-bg);
+  color: white;
+  font-weight: 800;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.profile-name {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.profile-experience {
+  font-size: 13px;
+  color: #888;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.settings-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--off-white);
+  gap: 12px;
+}
+
+.settings-row-tappable {
+  text-align: left;
+}
+
+.settings-row-label {
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.settings-row-value {
+  font-size: 13px;
+  color: #888;
+  font-weight: 600;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.units-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.units-option {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--off-white);
+  font-weight: 700;
+  font-size: 14px;
+  border: 2px solid transparent;
+}
+
+.units-option-selected {
+  border-color: var(--color-units-indicator);
+}
+
+.settings-data-button {
+  width: 100%;
+  background: white;
+  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  font-weight: 700;
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.settings-toast {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cyan);
+  margin-bottom: 10px;
+}
+
+.settings-reset-button {
+  width: 100%;
+  background: var(--color-danger-button);
+  color: white;
+  border-radius: var(--radius-card);
+  padding: 16px;
+  font-weight: 800;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 24px;
+}

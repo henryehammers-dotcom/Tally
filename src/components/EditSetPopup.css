@@ -1,0 +1,8 @@
+.edit-set-row {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-set-row .rename-input {
+  margin-top: 4px;
+}

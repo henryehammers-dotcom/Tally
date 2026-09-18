@@ -1,0 +1,20 @@
+.create-routine-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.create-routine-option {
+  padding: 16px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 15px;
+  background: var(--black);
+  color: white;
+}
+
+.create-routine-option-alt {
+  background: var(--off-white);
+  color: var(--black);
+}

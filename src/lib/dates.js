@@ -58,3 +58,33 @@ export function getLast7Days() {
 export function isSameOrBefore(dateKeyA, dateKeyB) {
   return dateKeyA <= dateKeyB
 }
+
+export function getMonthLabel(year, monthIndex) {
+  return new Date(year, monthIndex, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+}
+
+export function addMonths(year, monthIndex, delta) {
+  const total = year * 12 + monthIndex + delta
+  return { year: Math.floor(total / 12), monthIndex: ((total % 12) + 12) % 12 }
+}
+
+// Monday-start week, matching the rest of the app's week convention.
+export function getCalendarCells(year, monthIndex) {
+  const firstOfMonth = new Date(year, monthIndex, 1)
+  const daysInMonth = new Date(year, monthIndex + 1, 0).getDate()
+  const firstWeekday = firstOfMonth.getDay()
+  const leadingBlanks = firstWeekday === 0 ? 6 : firstWeekday - 1
+
+  const cells = []
+  for (let i = 0; i < leadingBlanks; i++) cells.push(null)
+  for (let d = 1; d <= daysInMonth; d++) {
+    cells.push({ dateKey: toDateKey(new Date(year, monthIndex, d)), dayNum: d })
+  }
+  return cells
+}
+
+export function formatMonthDayYear(dateKey) {
+  const [y, m, d] = dateKey.split('-').map(Number)
+  const date = new Date(y, m - 1, d)
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+}

@@ -1,0 +1,9 @@
+{
+  "appId": "com.henryhammers.tally",
+  "appName": "Tally",
+  "webDir": "dist-native",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#ffffff"
+  }
+}

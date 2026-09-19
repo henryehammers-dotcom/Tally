@@ -6,7 +6,11 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const BASE = '/Tally/'
+// `npm run build:native` builds the bundle that ships inside the iOS app
+// (Capacitor serves it from the device, so relative paths and no service
+// worker). The default build is the GitHub Pages web app.
+const NATIVE = process.env.TALLY_NATIVE === '1'
+const BASE = NATIVE ? './' : '/Tally/'
 
 // Drop a square image named "icon.png" / "icon.jpg" / "icon.jpeg" / "icon.webp"
 // directly into public/ and it becomes the PWA + iOS home-screen icon on the
@@ -52,10 +56,12 @@ function injectIconLinks() {
 
 export default defineConfig({
   base: BASE,
+  build: { outDir: NATIVE ? 'dist-native' : 'dist' },
   plugins: [
     react(),
     injectIconLinks(),
     VitePWA({
+      disable: NATIVE,
       registerType: 'autoUpdate',
       workbox: {
         clientsClaim: true,

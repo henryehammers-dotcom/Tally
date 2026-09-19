@@ -12,13 +12,17 @@ export default function Welcome() {
     <div
       data-debug-target
       style={{
-        // Was minHeight: '100dvh'. #root is ALSO sized to 100dvh — two
-        // independent dvh calculations at different DOM depths can
-        // resolve a few px apart on iOS Safari as the chrome animates,
-        // which is exactly the top sliver you saw. Filling #root's own
-        // 100% instead removes the second independent calculation.
-        minHeight: '100%',
-        width: '100%',
+        // position:fixed + inset:0 anchors directly to the true visual
+        // viewport edges (respecting viewport-fit=cover), independent of
+        // #root's dvh-based sizing. dvh has been the source of two
+        // separate full-bleed bugs already (a top sliver from a double
+        // dvh calculation, then a bottom gap in standalone PWA mode where
+        // dvh under-counts the home-indicator safe area) — anchoring
+        // directly to the viewport sidesteps both instead of chasing
+        // more dvh edge cases.
+        position: 'fixed',
+        inset: 0,
+        overflowY: 'auto',
         background: '#0cc0df',
         display: 'flex',
         flexDirection: 'column',

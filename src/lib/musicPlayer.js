@@ -1,5 +1,4 @@
 import composers from '../../data/library/music.json'
-import tracksManifest from '../../data/library/music-tracks.json'
 
 function shuffle(arr) {
   const a = [...arr]
@@ -14,8 +13,26 @@ function getComposer(id) {
   return composers.find((c) => c.id === id)
 }
 
+const tracksCache = new Map()
+
 export function tracksFor(composerId) {
-  return tracksManifest[composerId] || []
+  return tracksCache.get(composerId) || []
+}
+
+export async function fetchTracksFor(composerId) {
+  if (tracksCache.has(composerId)) return tracksCache.get(composerId)
+  const composer = getComposer(composerId)
+  if (!composer) return []
+  try {
+    const res = await fetch(`${composer.audioFolder}tracks.json`)
+    if (!res.ok) throw new Error('tracks.json not found')
+    const tracks = await res.json()
+    tracksCache.set(composerId, tracks)
+    return tracks
+  } catch {
+    tracksCache.set(composerId, [])
+    return []
+  }
 }
 
 const audio = typeof Audio !== 'undefined' ? new Audio() : null
@@ -70,21 +87,23 @@ export function getPlayerState() {
   return state
 }
 
-export function tapComposer(composerId) {
-  const tracks = tracksFor(composerId)
-
+export async function tapComposer(composerId) {
   if (state.composerId === composerId) {
     if (state.isPlaying) {
       audio?.pause()
       setState({ isPlaying: false })
-    } else if (tracks.length > 0) {
-      audio?.play().catch(() => {})
-      setState({ isPlaying: true })
+    } else {
+      const tracks = tracksFor(composerId)
+      if (tracks.length > 0) {
+        audio?.play().catch(() => {})
+        setState({ isPlaying: true })
+      }
     }
     return
   }
 
   audio?.pause()
+  const tracks = await fetchTracksFor(composerId)
   if (tracks.length === 0) {
     setState({ composerId, isPlaying: false, queue: [], trackIndex: 0, noTracks: true })
     return

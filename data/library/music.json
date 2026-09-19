@@ -1,8 +1,8 @@
 [
-  { "id": "tchaikovsky", "composer": "Tchaikovsky", "color": "#bc3fde", "duration": null, "audioFolder": "audio/tchaikovsky/" },
-  { "id": "beethoven", "composer": "Beethoven", "color": "#0cc0df", "duration": null, "audioFolder": "audio/beethoven/" },
-  { "id": "rachmaninoff", "composer": "Rachmaninoff", "color": "#ff1fa9", "duration": null, "audioFolder": "audio/rachmaninoff/" },
-  { "id": "chopin", "composer": "Chopin", "color": "#1fff93", "duration": null, "audioFolder": "audio/chopin/" },
-  { "id": "mozart", "composer": "Mozart", "color": "#ffa51f", "duration": null, "audioFolder": "audio/mozart/" },
-  { "id": "bach", "composer": "Bach", "color": "#ff751f", "duration": null, "audioFolder": "audio/bach/" }
+  { "id": "tchaikovsky", "composer": "Tchaikovsky", "color": "#bc3fde", "duration": null, "audioFolder": "music/Tchaikovsky/" },
+  { "id": "beethoven", "composer": "Beethoven", "color": "#0cc0df", "duration": null, "audioFolder": "music/Beethoven/" },
+  { "id": "rachmaninoff", "composer": "Rachmaninoff", "color": "#ff1fa9", "duration": null, "audioFolder": "music/Rachmaninoff/" },
+  { "id": "chopin", "composer": "Chopin", "color": "#1fff93", "duration": null, "audioFolder": "music/Chopin/" },
+  { "id": "mozart", "composer": "Mozart", "color": "#ffa51f", "duration": null, "audioFolder": "music/Mozart/" },
+  { "id": "bach", "composer": "Bach", "color": "#ff751f", "duration": null, "audioFolder": "music/Bach/" }
 ]

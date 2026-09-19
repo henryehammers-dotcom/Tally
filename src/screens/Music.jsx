@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { composers } from '../lib/library'
-import { subscribe, tapComposer, tracksFor } from '../lib/musicPlayer'
+import { subscribe, tapComposer, fetchTracksFor } from '../lib/musicPlayer'
 import './Music.css'
 
 function EqBar() {
@@ -13,10 +13,18 @@ function EqBar() {
 
 export default function Music() {
   const [player, setPlayer] = useState(null)
+  const [trackCounts, setTrackCounts] = useState({})
 
   useEffect(() => {
     const unsubscribe = subscribe(setPlayer)
     return unsubscribe
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+    Promise.all(composers.map((c) => fetchTracksFor(c.id).then((tracks) => [c.id, tracks.length])))
+      .then((entries) => { if (!cancelled) setTrackCounts(Object.fromEntries(entries)) })
+    return () => { cancelled = true }
   }, [])
 
   return (
@@ -43,7 +51,7 @@ export default function Music() {
               ) : c.duration ? (
                 <div className="music-card-duration">{c.duration}</div>
               ) : (
-                <div className="music-card-duration">{tracksFor(c.id).length} tracks</div>
+                <div className="music-card-duration">{trackCounts[c.id] ?? 0} tracks</div>
               )}
             </button>
           )

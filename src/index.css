@@ -73,19 +73,23 @@ body {
 }
 
 #root {
-  /* FIX: was `height: 100%`, which resolves against body's 100% — not
-     the true dynamic mobile viewport. On phones with a visible address
-     bar, that left #root shorter than the real screen, so full-bleed
-     screens (like Welcome, which correctly used 100dvh on its own inner
-     div) overflowed #root's box, exposing white space above/around it.
-     Sizing #root itself to 100dvh fixes it at the source. */
-  height: 100dvh;
-  min-height: 100%;
+  /* FIX: was height:100dvh, which under-counts the bottom safe area in
+     standalone (home-screen) PWA mode on iOS — the same class of bug
+     fixed on the Welcome screen, but here it hit every screen at once
+     since #root's box is the containing frame for the whole app. dvh
+     is a viewport-height CALCULATION; position:fixed + inset:0 instead
+     anchors directly to the real screen edges (respecting
+     viewport-fit=cover), sidestepping the calculation entirely. #root
+     now scrolls its own content internally rather than the page/body
+     scrolling, since it's taken out of normal document flow. */
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  position: relative;
-  overflow-x: hidden;
   background: var(--white);
 }
 

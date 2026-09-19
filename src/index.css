@@ -65,10 +65,18 @@ html, body {
   touch-action: pan-y;
 }
 
+html {
+  /* TEMPORARY DEBUG — revert to nothing once the bottom-gap bug is
+     diagnosed. Makes whatever is behind #root glaringly visible instead
+     of blending in as white-on-white. */
+  background: magenta;
+}
+
 body {
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: var(--black);
-  background: var(--white);
+  /* TEMPORARY DEBUG — was var(--white); see the html rule above. */
+  background: magenta;
   -webkit-tap-highlight-color: transparent;
 }
 

@@ -22,6 +22,7 @@ export default function DebugOverlay() {
       document.body.removeChild(probe)
 
       const isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches
+      const trueAppHeight = getComputedStyle(document.documentElement).getPropertyValue('--true-app-height')
 
       setInfo({
         innerHeight: window.innerHeight,
@@ -34,6 +35,7 @@ export default function DebugOverlay() {
         safeBottom,
         isStandalone,
         dpr: window.devicePixelRatio,
+        trueAppHeight,
       })
     }
     measure()
@@ -68,7 +70,7 @@ export default function DebugOverlay() {
       standalone: {String(info.isStandalone)} | dpr: {info.dpr}<br />
       innerH: {info.innerHeight} outerH: {info.outerHeight} docClientH: {info.docClientHeight}<br />
       root top:{info.rootTop} bottom:{info.rootBottom} h:{info.rootHeight}<br />
-      safeTop:{info.safeTop} safeBottom:{info.safeBottom}
+      safeTop:{info.safeTop} safeBottom:{info.safeBottom} trueAppH:{info.trueAppHeight}
     </div>
   )
 }

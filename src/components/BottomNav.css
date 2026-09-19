@@ -1,6 +1,11 @@
 .bottom-nav {
   position: fixed;
-  bottom: calc(12px + env(safe-area-inset-bottom));
+  /* See lib/viewportHeight.js — bottom: on a fixed element resolves
+     against the same under-reported browser height #root did, landing
+     the nav ~safeAreaInsetTop px too high. Subtracting the correction
+     moves it back down to the real intended offset from the true
+     bottom edge. */
+  bottom: calc(12px + env(safe-area-inset-bottom) - var(--viewport-bottom-correction, 0px));
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 32px);

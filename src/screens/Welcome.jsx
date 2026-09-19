@@ -28,16 +28,18 @@ export default function Welcome() {
     <div
       data-debug-target
       style={{
-        // position:fixed + inset:0 anchors directly to the true visual
-        // viewport edges (respecting viewport-fit=cover), independent of
-        // #root's dvh-based sizing. dvh has been the source of two
-        // separate full-bleed bugs already (a top sliver from a double
-        // dvh calculation, then a bottom gap in standalone PWA mode where
-        // dvh under-counts the home-indicator safe area) — anchoring
-        // directly to the viewport sidesteps both instead of chasing
-        // more dvh edge cases.
+        // Confirmed via on-device diagnostics: inset:0's bottom edge
+        // resolves against window.innerHeight/clientHeight, which iOS
+        // under-reports by the top safe-area amount in standalone mode
+        // with a black-translucent status bar. Explicit height from
+        // --true-app-height (computed in lib/viewportHeight.js) is the
+        // real fix; the body-background trick below just papered over
+        // the same shortfall by color-matching rather than closing it.
         position: 'fixed',
-        inset: 0,
+        top: 0,
+        left: 0,
+        right: 0,
+        height: 'var(--true-app-height, 100dvh)',
         overflowY: 'auto',
         background: '#0cc0df',
         display: 'flex',

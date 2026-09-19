@@ -7,7 +7,7 @@
      override, the nav buttons below sit stranded far above the real
      bottom edge. */
   padding-top: calc(48px + env(safe-area-inset-top));
-  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  padding-bottom: calc(24px + var(--safe-bottom, env(safe-area-inset-bottom)));
 }
 
 .q-content {

@@ -1,11 +1,6 @@
 .bottom-nav {
   position: fixed;
-  /* #root is normal-flow now (see index.css), not position:fixed, so
-     this resolves against the true viewport directly — no correction
-     needed. env(safe-area-inset-bottom) is an independent OS-reported
-     value, not derived from the buggy clientHeight #root had to work
-     around. */
-  bottom: calc(12px + env(safe-area-inset-bottom));
+  bottom: calc(12px + var(--safe-bottom, env(safe-area-inset-bottom)));
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 32px);

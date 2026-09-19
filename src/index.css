@@ -65,34 +65,15 @@ html, body {
   touch-action: pan-y;
 }
 
-html {
-  /* TEMPORARY DEBUG — revert to nothing once the bottom-gap bug is
-     diagnosed. Makes whatever is behind #root glaringly visible instead
-     of blending in as white-on-white. */
-  background: magenta;
-}
-
 body {
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: var(--black);
-  /* TEMPORARY DEBUG — was var(--white); see the html rule above. */
-  background: magenta;
+  background: var(--white);
   -webkit-tap-highlight-color: transparent;
 }
 
 #root {
-  /* FIX: on-device diagnostics proved the height MATH was right
-     (getBoundingClientRect reported 956, matching the real screen) but
-     the app still visibly clipped at the old short height — a WebKit
-     rendering bug where position:fixed elements can visually clip to a
-     stale viewport even when their computed layout box is correct.
-     Rather than continue fighting position:fixed's rendering quirks,
-     #root now lives in normal document flow with an explicit height
-     from --true-app-height (see lib/viewportHeight.js) — normal
-     block-level sizing doesn't have this fixed-position-specific
-     compositing bug. The page (body) scrolls again, as it originally
-     did before this whole detour into position:fixed. */
-  height: var(--true-app-height, 100dvh);
+  height: 100dvh;
   min-height: 100%;
   width: 100%;
   max-width: 480px;
@@ -123,7 +104,7 @@ input {
    Library's content could run past the right edge of the viewport with
    no horizontal safety net. Belongs here, globally, once. */
 .screen {
-  padding: calc(24px + env(safe-area-inset-top)) 20px calc(100px + env(safe-area-inset-bottom));
+  padding: calc(24px + env(safe-area-inset-top)) 20px calc(100px + var(--safe-bottom, env(safe-area-inset-bottom)));
   min-height: 100%;
   width: 100%;
   overflow-x: hidden;

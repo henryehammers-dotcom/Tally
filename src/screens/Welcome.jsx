@@ -28,19 +28,12 @@ export default function Welcome() {
     <div
       data-debug-target
       style={{
-        // Confirmed via on-device diagnostics: inset:0's bottom edge
-        // resolves against window.innerHeight/clientHeight, which iOS
-        // under-reports by the top safe-area amount in standalone mode
-        // with a black-translucent status bar. Explicit height from
-        // --true-app-height (computed in lib/viewportHeight.js) is the
-        // real fix; the body-background trick below just papered over
-        // the same shortfall by color-matching rather than closing it.
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 'var(--true-app-height, 100dvh)',
-        overflowY: 'auto',
+        // Same fix as #root (see index.css): position:fixed elements
+        // can visually clip to a stale viewport on iOS even when their
+        // computed layout box is correct, so this stays in normal flow
+        // with an explicit min-height from --true-app-height instead.
+        minHeight: 'var(--true-app-height, 100dvh)',
+        width: '100%',
         background: '#0cc0df',
         display: 'flex',
         flexDirection: 'column',

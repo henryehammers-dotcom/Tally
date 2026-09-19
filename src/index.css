@@ -81,29 +81,24 @@ body {
 }
 
 #root {
-  /* FIX: confirmed via on-device diagnostics — in standalone PWA mode
-     with apple-mobile-web-app-status-bar-style:black-translucent, iOS
-     paints content correctly under the status bar but does NOT update
-     window.innerHeight/clientHeight to include that space, so anything
-     sized off the browser's own viewport math (dvh, vh, %, or
-     position:fixed+inset:0 resolving against clientHeight) comes up
-     short at the bottom by exactly the top safe-area amount. Fixed
-     top/left/right plus an explicit height from --true-app-height
-     (computed in JS from window.innerHeight + the measured top inset —
-     see lib/viewportHeight.js) sidesteps the browser's bad number
-     entirely instead of trusting it. #root scrolls its own content
-     internally since fixed positioning takes it out of document flow. */
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  /* FIX: on-device diagnostics proved the height MATH was right
+     (getBoundingClientRect reported 956, matching the real screen) but
+     the app still visibly clipped at the old short height — a WebKit
+     rendering bug where position:fixed elements can visually clip to a
+     stale viewport even when their computed layout box is correct.
+     Rather than continue fighting position:fixed's rendering quirks,
+     #root now lives in normal document flow with an explicit height
+     from --true-app-height (see lib/viewportHeight.js) — normal
+     block-level sizing doesn't have this fixed-position-specific
+     compositing bug. The page (body) scrolls again, as it originally
+     did before this whole detour into position:fixed. */
   height: var(--true-app-height, 100dvh);
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
+  min-height: 100%;
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
   background: var(--white);
 }
 

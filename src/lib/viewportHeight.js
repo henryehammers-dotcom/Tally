@@ -22,12 +22,6 @@ function syncTrueAppHeight() {
   const safeTop = measureSafeAreaInsetTop()
   const trueHeight = window.innerHeight + safeTop
   document.documentElement.style.setProperty('--true-app-height', `${trueHeight}px`)
-  // Every position:fixed element's containing block (not just #root) is
-  // computed off the same under-reported browser height, so any fixed
-  // element using bottom:/inset:0 lands `safeTop` px too high. This lets
-  // each of those add the correction back in (see BottomNav.css,
-  // Popup.css) instead of duplicating the whole height calculation.
-  document.documentElement.style.setProperty('--viewport-bottom-correction', `${safeTop}px`)
 }
 
 export function initViewportHeightSync() {

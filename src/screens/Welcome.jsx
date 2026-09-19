@@ -1,8 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Questionnaire from './Questionnaire'
 
 export default function Welcome() {
   const [started, setStarted] = useState(false)
+
+  // Belt-and-suspenders for the standalone-mode bottom gap: position:fixed
+  // + inset:0 should already cover the full viewport on its own, but if
+  // any edge case still leaves a sliver, painting the body itself blue
+  // means there's nothing white underneath left to show through. Only
+  // while showing the welcome content itself — Questionnaire is white.
+  useEffect(() => {
+    if (started) {
+      document.body.style.background = ''
+      return
+    }
+    document.body.style.background = '#0cc0df'
+    return () => {
+      document.body.style.background = ''
+    }
+  }, [started])
 
   if (started) {
     return <Questionnaire />

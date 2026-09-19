@@ -281,7 +281,7 @@ export default function Library() {
             <button
               key={mg}
               className="muscle-bubble"
-              style={{ background: getMuscleGroupColor(mg) }}
+              style={{ background: getMuscleGroupColor(mg), fontSize: mg === 'Shoulders' ? 22 : undefined }}
               onClick={() => setActiveMuscleGroup(mg)}
             >
               {mg}

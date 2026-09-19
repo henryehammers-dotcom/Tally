@@ -2,17 +2,25 @@
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  padding-top: calc(60px + env(safe-area-inset-top));
+  /* Override .screen's bottom padding — that 100px+ reserves room for the
+     floating BottomNav pill, which this screen doesn't have. Without this
+     override, the nav buttons below sit stranded far above the real
+     bottom edge. */
+  padding-top: calc(48px + env(safe-area-inset-top));
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
 }
 
 .q-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .q-question {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 800;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .q-input {
@@ -20,7 +28,7 @@
   background: var(--off-white);
   border: none;
   border-radius: var(--radius-pill);
-  padding: 16px 20px;
+  padding: 16px 44px 16px 20px;
   font-size: 16px;
   font-weight: 600;
 }
@@ -34,6 +42,25 @@
   flex: 1;
 }
 
+.q-input-wrap {
+  position: relative;
+}
+
+.q-row .q-input-wrap {
+  flex: 1;
+}
+
+.q-input-unit {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 700;
+  font-size: 14px;
+  color: #999;
+  pointer-events: none;
+}
+
 .q-option-list {
   display: flex;
   flex-direction: column;
@@ -41,16 +68,18 @@
 }
 
 .q-option {
-  padding: 16px;
+  padding: 18px;
   border-radius: var(--radius-pill);
-  background: var(--off-white);
+  background: white;
+  box-shadow: var(--shadow-card);
   font-weight: 700;
   font-size: 15px;
   text-align: left;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .q-option-selected {
-  background: var(--black);
+  background: var(--cyan);
   color: white;
 }
 
@@ -61,15 +90,17 @@
 }
 
 .q-chip {
-  padding: 12px 18px;
+  padding: 13px 20px;
   border-radius: var(--radius-pill);
-  background: var(--off-white);
+  background: white;
+  box-shadow: var(--shadow-card);
   font-weight: 700;
   font-size: 14px;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .q-chip-selected {
-  background: var(--black);
+  background: var(--cyan);
   color: white;
 }
 

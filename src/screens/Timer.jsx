@@ -53,13 +53,13 @@ function formatClock(totalSeconds) {
   return `${s}s`
 }
 
+// status: 'idle' | 'running' | 'paused'
 export default function Timer() {
   const [mode, setMode] = useState('timer')
   const [hr, setHr] = useState(0)
   const [min, setMin] = useState(0)
   const [sec, setSec] = useState(0)
-  const [running, setRunning] = useState(false)
-  const [paused, setPaused] = useState(false)
+  const [status, setStatus] = useState('idle')
   const [remaining, setRemaining] = useState(0)
   const [elapsed, setElapsed] = useState(0)
   const intervalRef = useRef(null)
@@ -71,8 +71,7 @@ export default function Timer() {
 
   function resetAll() {
     clearTimer()
-    setRunning(false)
-    setPaused(false)
+    setStatus('idle')
     setRemaining(0)
     setElapsed(0)
   }
@@ -83,63 +82,55 @@ export default function Timer() {
     setMode(next)
   }
 
-  function handleStart() {
-    if (mode === 'timer') {
-      const total = hr * 3600 + min * 60 + sec
-      if (total === 0) return
-      setRemaining(total)
-      setRunning(true)
-      setPaused(false)
-      intervalRef.current = setInterval(() => {
-        setRemaining((prev) => {
-          if (prev <= 1) {
-            clearTimer()
-            setRunning(false)
-            return 0
-          }
-          return prev - 1
-        })
-      }, 1000)
-    } else {
-      setElapsed(0)
-      setRunning(true)
-      setPaused(false)
-      intervalRef.current = setInterval(() => {
-        setElapsed((prev) => prev + 1)
-      }, 1000)
-    }
+  function tickTimer() {
+    intervalRef.current = setInterval(() => {
+      setRemaining((prev) => {
+        if (prev <= 1) {
+          clearTimer()
+          setStatus('idle')
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
   }
 
-  function handlePauseResume() {
-    if (!paused) {
-      clearTimer()
-      setPaused(true)
-    } else {
-      setPaused(false)
-      if (mode === 'timer') {
-        intervalRef.current = setInterval(() => {
-          setRemaining((prev) => {
-            if (prev <= 1) {
-              clearTimer()
-              setRunning(false)
-              return 0
-            }
-            return prev - 1
-          })
-        }, 1000)
-      } else {
-        intervalRef.current = setInterval(() => setElapsed((prev) => prev + 1), 1000)
+  function tickStopwatch() {
+    intervalRef.current = setInterval(() => {
+      setElapsed((prev) => prev + 1)
+    }, 1000)
+  }
+
+  function handleStartOrResume() {
+    if (mode === 'timer') {
+      if (status === 'idle') {
+        const total = hr * 3600 + min * 60 + sec
+        if (total === 0) return
+        setRemaining(total)
       }
+      setStatus('running')
+      tickTimer()
+    } else {
+      if (status === 'idle') {
+        setElapsed(0)
+      }
+      setStatus('running')
+      tickStopwatch()
     }
   }
 
   function handleStop() {
+    clearTimer()
+    setStatus('paused')
+  }
+
+  function handleReset() {
     resetAll()
   }
 
   useEffect(() => () => clearTimer(), [])
 
-  const isIdle = !running
+  const isDrumScrollerVisible = mode === 'timer' && status === 'idle'
   const displaySeconds = mode === 'timer' ? remaining : elapsed
 
   return (
@@ -150,7 +141,7 @@ export default function Timer() {
       </div>
 
       <div className="timer-circle">
-        {mode === 'timer' && isIdle ? (
+        {isDrumScrollerVisible ? (
           <div className="drum-scroller">
             <DrumColumn max={24} value={hr} onChange={setHr} label="hr" />
             <DrumColumn max={60} value={min} onChange={setMin} label="min" />
@@ -162,11 +153,11 @@ export default function Timer() {
       </div>
 
       <div className="timer-buttons">
-        <button className="timer-btn timer-btn-stop" onClick={handleStop}>Stop</button>
-        {!running ? (
-          <button className="timer-btn timer-btn-start" onClick={handleStart}>Start</button>
+        <button className="timer-btn timer-btn-stop" onClick={handleReset}>Reset</button>
+        {status === 'running' ? (
+          <button className="timer-btn timer-btn-start" onClick={handleStop}>Stop</button>
         ) : (
-          <button className="timer-btn timer-btn-start" onClick={handlePauseResume}>{paused ? 'Resume' : 'Pause'}</button>
+          <button className="timer-btn timer-btn-start" onClick={handleStartOrResume}>Start</button>
         )}
       </div>
     </div>

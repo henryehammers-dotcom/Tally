@@ -83,22 +83,26 @@ export default function Questionnaire() {
         <>
           <div className="q-question">How tall are you?</div>
           <div className="q-row">
-            <input
-              className="q-input q-input-small"
-              type="text"
-              inputMode="numeric"
-              value={profile.height.ft}
-              onChange={(e) => persist({ ...profile, height: { ...profile.height, ft: e.target.value } })}
-              placeholder="ft"
-            />
-            <input
-              className="q-input q-input-small"
-              type="text"
-              inputMode="numeric"
-              value={profile.height.in}
-              onChange={(e) => persist({ ...profile, height: { ...profile.height, in: e.target.value } })}
-              placeholder="in"
-            />
+            <div className="q-input-wrap">
+              <input
+                className="q-input q-input-small"
+                type="text"
+                inputMode="numeric"
+                value={profile.height.ft}
+                onChange={(e) => persist({ ...profile, height: { ...profile.height, ft: e.target.value } })}
+              />
+              <span className="q-input-unit">ft</span>
+            </div>
+            <div className="q-input-wrap">
+              <input
+                className="q-input q-input-small"
+                type="text"
+                inputMode="numeric"
+                value={profile.height.in}
+                onChange={(e) => persist({ ...profile, height: { ...profile.height, in: e.target.value } })}
+              />
+              <span className="q-input-unit">in</span>
+            </div>
           </div>
         </>
       )
@@ -107,15 +111,17 @@ export default function Questionnaire() {
       return (
         <>
           <div className="q-question">What's your weight?</div>
-          <input
-            className="q-input"
-            type="text"
-            inputMode="numeric"
-            value={profile.weight}
-            onChange={(e) => persist({ ...profile, weight: e.target.value })}
-            placeholder="lbs"
-            autoFocus
-          />
+          <div className="q-input-wrap">
+            <input
+              className="q-input"
+              type="text"
+              inputMode="numeric"
+              value={profile.weight}
+              onChange={(e) => persist({ ...profile, weight: e.target.value })}
+              autoFocus
+            />
+            <span className="q-input-unit">lbs</span>
+          </div>
         </>
       )
     }

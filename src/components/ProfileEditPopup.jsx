@@ -38,12 +38,21 @@ export default function ProfileEditPopup({ profile, onClose, onSave }) {
 
         <div className="pe-label">Height</div>
         <div className="pe-row">
-          <input className="rename-input" type="text" inputMode="numeric" value={ft} onChange={(e) => setFt(e.target.value)} placeholder="ft" />
-          <input className="rename-input" type="text" inputMode="numeric" value={inch} onChange={(e) => setInch(e.target.value)} placeholder="in" />
+          <div className="pe-input-wrap">
+            <input className="rename-input" type="text" inputMode="numeric" value={ft} onChange={(e) => setFt(e.target.value)} />
+            <span className="pe-input-unit">ft</span>
+          </div>
+          <div className="pe-input-wrap">
+            <input className="rename-input" type="text" inputMode="numeric" value={inch} onChange={(e) => setInch(e.target.value)} />
+            <span className="pe-input-unit">in</span>
+          </div>
         </div>
 
         <div className="pe-label">Weight</div>
-        <input className="rename-input" type="text" inputMode="numeric" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="lbs" />
+        <div className="pe-input-wrap">
+          <input className="rename-input" type="text" inputMode="numeric" value={weight} onChange={(e) => setWeight(e.target.value)} />
+          <span className="pe-input-unit">lbs</span>
+        </div>
 
         <div className="pe-label">Experience Level</div>
         <div className="pe-option-list">

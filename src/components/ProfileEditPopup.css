@@ -17,6 +17,29 @@
   gap: 8px;
 }
 
+.pe-row .pe-input-wrap {
+  flex: 1;
+}
+
+.pe-input-wrap {
+  position: relative;
+}
+
+.pe-input-wrap .rename-input {
+  padding-right: 44px;
+}
+
+.pe-input-unit {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 700;
+  font-size: 13px;
+  color: #999;
+  pointer-events: none;
+}
+
 .pe-option-list {
   display: flex;
   flex-direction: column;
@@ -33,6 +56,6 @@
 }
 
 .pe-option-selected {
-  background: var(--black);
+  background: var(--cyan);
   color: white;
 }

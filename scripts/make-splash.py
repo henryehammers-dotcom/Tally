@@ -36,6 +36,12 @@ for w, h, r in DEVICES:
     pw, ph = w * r, h * r
     make(pw, ph, round(pw * MARK_WIDTH)).save(os.path.join(out, f'{pw}x{ph}.png'), optimize=True)
 
+# The in-app splash (src/components/SplashScreen.jsx) holds the same design a
+# little longer than iOS's own splash image; it inlines this centered mark.
+os.makedirs(os.path.join(root, 'src', 'assets'), exist_ok=True)
+mark.resize((400, round(400 * mark.height / mark.width)), Image.LANCZOS).save(
+    os.path.join(root, 'src', 'assets', 'splash-mark.png'), optimize=True)
+
 # Launch image for the native iOS wrapper (square, aspect-filled by iOS).
 native = os.path.join(root, 'ios', 'App', 'App', 'Assets.xcassets', 'Splash.imageset')
 if os.path.isdir(native):

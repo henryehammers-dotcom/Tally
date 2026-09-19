@@ -22,6 +22,8 @@ function sync() {
   const strip = standalone && top > 0 ? Math.max(0, window.outerHeight - window.innerHeight) : 0
   const effective = Math.max(0, bottom - strip)
   document.documentElement.style.setProperty('--safe-bottom', `${effective}px`)
+  const offset = standalone ? Math.max(0, window.screen.height - window.innerHeight) : 0
+  document.documentElement.style.setProperty('--splash-offset', `${offset}px`)
 }
 
 export function initSafeBottom() {

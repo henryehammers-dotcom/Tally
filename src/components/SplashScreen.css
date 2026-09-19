@@ -1,0 +1,29 @@
+html.splash-active {
+  background: var(--cyan);
+}
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.splash-fade {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-mark {
+  width: 30vw;
+  height: auto;
+  display: block;
+  /* iOS's own splash image is centered on the full screen; the page can sit
+     below the status bar, so nudge the mark up by half that offset. */
+  transform: translateY(calc(var(--splash-offset, 0px) / -2));
+}

@@ -1,6 +1,7 @@
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { isOnboardingComplete } from './lib/storage'
 import BottomNav from './components/BottomNav'
+import SplashScreen from './components/SplashScreen'
 import Welcome from './screens/Welcome'
 import Home from './screens/Home'
 import Library from './screens/Library'
@@ -30,6 +31,7 @@ function AppLayout({ children }) {
 export default function App() {
   return (
     <HashRouter>
+      <SplashScreen />
       <Routes>
         <Route path="/welcome" element={<Welcome />} />
         <Route

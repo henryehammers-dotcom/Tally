@@ -39,17 +39,39 @@ function findIconFile() {
 
 const icon = findIconFile()
 
+// iOS shows a splash image only if its pixel size matches the device exactly,
+// so there is one image per portrait iPhone size. Regenerate them from the
+// icon with `python3 scripts/make-splash.py`.
+const SPLASH_DEVICES = [
+  [440, 956, 3], [402, 874, 3], [430, 932, 3], [393, 852, 3], [420, 912, 3],
+  [390, 844, 3], [428, 926, 3], [375, 812, 3], [414, 896, 3], [414, 896, 2],
+  [375, 667, 2], [414, 736, 3], [320, 568, 2],
+]
+
+function splashLinks() {
+  const dir = path.resolve(__dirname, 'public', 'splash')
+  return SPLASH_DEVICES
+    .map(([w, h, r]) => {
+      const file = `${w * r}x${h * r}.png`
+      if (!fs.existsSync(path.join(dir, file))) return ''
+      return (
+        `    <link rel="apple-touch-startup-image" href="splash/${file}" ` +
+        `media="(device-width: ${w}px) and (device-height: ${h}px) and ` +
+        `(-webkit-device-pixel-ratio: ${r}) and (orientation: portrait)">\n`
+      )
+    })
+    .join('')
+}
+
 function injectIconLinks() {
   return {
     name: 'inject-icon-links',
     transformIndexHtml(html) {
-      if (!icon) return html
-      return html.replace(
-        '</head>',
-        `    <link rel="icon" href="${icon.filename}">\n` +
-        `    <link rel="apple-touch-icon" href="${icon.filename}">\n` +
-        `  </head>`
-      )
+      const iconLinks = icon
+        ? `    <link rel="icon" href="${icon.filename}">\n` +
+          `    <link rel="apple-touch-icon" href="${icon.filename}">\n`
+        : ''
+      return html.replace('</head>', `${iconLinks}${splashLinks()}  </head>`)
     },
   }
 }

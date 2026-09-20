@@ -149,7 +149,7 @@ const ExerciseCard = forwardRef(function ExerciseCard({
   exercise, routineColor, isLogged, isDragging, showOptions,
   onTap, onOptions, onCloseOptions, onDelete, onDragStart, onDragMove, onDragEnd,
 }, ref) {
-  const press = usePressTiers({
+  const { ref: pressRef, ...pressHandlers } = usePressTiers({
     onTap: () => {
       if (showOptions) {
         onCloseOptions()
@@ -166,10 +166,13 @@ const ExerciseCard = forwardRef(function ExerciseCard({
   return (
     <div className={`routine-exercise-card-wrap ${isDragging ? 'is-dragging' : ''}`}>
       <button
-        ref={ref}
+        ref={(el) => {
+          pressRef(el)
+          if (typeof ref === 'function') ref(el)
+        }}
         className="routine-exercise-card no-select"
         style={{ borderColor: routineColor }}
-        {...press}
+        {...pressHandlers}
       >
         <div className="routine-exercise-circle" style={{ background: routineColor }} />
         <div className="routine-exercise-name">{exercise.name}</div>

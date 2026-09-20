@@ -115,6 +115,14 @@ export default function Library() {
           ))}
         </div>
 
+        {errorPopup && (
+          <Popup
+            title="Already in this routine"
+            message={errorPopup}
+            onClose={() => setErrorPopup(null)}
+          />
+        )}
+
         {tradingCardExercise && (
           <TradingCard
             exercise={tradingCardExercise}
@@ -232,14 +240,14 @@ export default function Library() {
     <div className="screen">
       <div className="library-header">
         <h1>Library</h1>
-        {!addToRoutineId && (
-          <div className="library-header-actions">
-            <button className="search-button" onClick={() => setShowSearch(true)}>
-              <svg width="20" height="20" viewBox="0 0 20 20">
-                <circle cx="8.5" cy="8.5" r="6.5" stroke="black" strokeWidth="2" fill="none" />
-                <line x1="13.2" y1="13.2" x2="18" y2="18" stroke="black" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </button>
+        <div className="library-header-actions">
+          <button className="search-button" onClick={() => setShowSearch(true)}>
+            <svg width="20" height="20" viewBox="0 0 20 20">
+              <circle cx="8.5" cy="8.5" r="6.5" stroke="black" strokeWidth="2" fill="none" />
+              <line x1="13.2" y1="13.2" x2="18" y2="18" stroke="black" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+          {!addToRoutineId && (
             <div className="plus-button-wrap">
               <button
                 className="plus-button"
@@ -256,8 +264,8 @@ export default function Library() {
                 </button>
               )}
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       <div className="toggle-row">

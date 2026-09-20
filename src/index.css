@@ -59,9 +59,8 @@ html, body {
   width: 100%;
   overflow-x: hidden;
   overscroll-behavior-y: none;
-  /* Blocks pinch-zoom and double-tap-to-zoom app-wide. Elements that need
-     their own gesture handling (drag-to-reorder) already set their own
-     touch-action: none via .no-select and take precedence over this. */
+  /* Blocks pinch-zoom and double-tap-to-zoom app-wide, while still allowing
+     vertical scrolling. */
   touch-action: pan-y;
 }
 
@@ -112,9 +111,13 @@ input {
   box-sizing: border-box;
 }
 
+/* Long-press / drag-to-reorder elements. They must still let the page scroll
+   when a finger starts on them (touch-action: none would trap the scroll and
+   make every swipe register as a tap); usePressTiers blocks scrolling only
+   once a drag has actually begun. */
 .no-select {
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   user-select: none;
-  touch-action: none;
+  touch-action: pan-y;
 }

@@ -1,7 +1,3 @@
-html.splash-active {
-  background: var(--cyan);
-}
-
 .splash {
   position: fixed;
   inset: 0;

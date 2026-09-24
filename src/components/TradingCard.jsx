@@ -1,14 +1,15 @@
 import { useState } from 'react'
+import ExerciseInfoPopup from './ExerciseInfoPopup'
 import './Popup.css'
 import './TradingCard.css'
 
 function InfoIcon({ onClick }) {
   return (
-    <button className="trading-info-icon" onClick={onClick}>
-      <svg width="16" height="16" viewBox="0 0 16 16">
-        <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" fill="none" />
-        <circle cx="8" cy="4.6" r="0.9" fill="currentColor" />
-        <line x1="8" y1="7" x2="8" y2="11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <button className="trading-info-icon" onClick={onClick} aria-label="How to do this exercise">
+      <svg width="22" height="22" viewBox="0 0 22 22">
+        <circle cx="11" cy="11" r="9.5" stroke="var(--black)" strokeWidth="1.8" fill="none" />
+        <circle cx="11" cy="6.6" r="1.2" fill="var(--black)" />
+        <line x1="11" y1="9.6" x2="11" y2="16" stroke="var(--black)" strokeWidth="2" strokeLinecap="round" />
       </svg>
     </button>
   )
@@ -33,6 +34,7 @@ export default function TradingCard({ exercise, color, targets, actionLabel, onA
   const [showInfo, setShowInfo] = useState(false)
 
   return (
+    <>
     <div className="popup-overlay" onClick={onClose}>
       <div className="popup-card trading-card" onClick={(e) => e.stopPropagation()}>
         <button className="popup-close" onClick={onClose}>
@@ -43,7 +45,10 @@ export default function TradingCard({ exercise, color, targets, actionLabel, onA
         </button>
 
         <div className="trading-circle" style={{ background: color }} />
-        <div className="trading-name">{exercise.name}</div>
+        <div className="trading-name-row">
+          <div className="trading-name">{exercise.name}</div>
+          <InfoIcon onClick={() => setShowInfo(true)} />
+        </div>
 
         <div className="trading-muscles">
           {exercise.primaryMuscle}
@@ -52,14 +57,7 @@ export default function TradingCard({ exercise, color, targets, actionLabel, onA
 
         <div className="trading-targets-row">
           <span>{targetSummary(exercise, targets)}</span>
-          <InfoIcon onClick={() => setShowInfo((v) => !v)} />
         </div>
-
-        {showInfo && (
-          <div className="trading-instructions">
-            {exercise.instructions || 'Instructions coming soon.'}
-          </div>
-        )}
 
         <div className="popup-actions">
           <button className="popup-btn-primary trading-action" onClick={onAction}>
@@ -68,5 +66,7 @@ export default function TradingCard({ exercise, color, targets, actionLabel, onA
         </div>
       </div>
     </div>
+    {showInfo && <ExerciseInfoPopup exercise={exercise} onClose={() => setShowInfo(false)} />}
+    </>
   )
 }

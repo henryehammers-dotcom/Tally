@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { getRoutineById } from '../lib/routines'
 import { getExerciseById } from '../lib/library'
 import { logSet, getCurrentSetCount } from '../lib/sessions'
+import ExerciseInfoPopup from '../components/ExerciseInfoPopup'
 import './LogPage.css'
 
 function parseRestSeconds(restStr) {
@@ -21,6 +22,7 @@ export default function LogPage() {
   const [exercise, setExercise] = useState(null)
   const [targets, setTargets] = useState(null)
   const [setsLogged, setSetsLogged] = useState(0)
+  const [showInfo, setShowInfo] = useState(false)
 
   const [reps, setReps] = useState('')
   const [weight, setWeight] = useState('')
@@ -148,7 +150,16 @@ export default function LogPage() {
   return (
     <div className="screen log-screen">
       <div className="log-header">
-        <div className="log-title">{exercise.name}</div>
+        <div className="log-title-group">
+          <div className="log-title">{exercise.name}</div>
+          <button className="log-info-button" onClick={() => setShowInfo(true)} aria-label="How to do this exercise">
+            <svg width="26" height="26" viewBox="0 0 26 26">
+              <circle cx="13" cy="13" r="11" stroke="var(--black)" strokeWidth="2" fill="none" />
+              <circle cx="13" cy="7.6" r="1.4" fill="var(--black)" />
+              <line x1="13" y1="11" x2="13" y2="19" stroke="var(--black)" strokeWidth="2.2" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
         <button className="log-close" onClick={() => navigate(-1)}>
           <svg width="18" height="18" viewBox="0 0 18 18">
             <line x1="2" y1="2" x2="16" y2="16" stroke="var(--black)" strokeWidth="2" strokeLinecap="round" />
@@ -198,7 +209,6 @@ export default function LogPage() {
           ) : (
             <span>{targets.sets} sets &middot; {targets.reps} reps &middot; {targets.rest} rest</span>
           )}
-          <button className="log-info-icon">ⓘ</button>
         </div>
 
         {resting ? (
@@ -239,6 +249,8 @@ export default function LogPage() {
           </>
         )}
       </div>
+
+      {showInfo && <ExerciseInfoPopup exercise={exercise} onClose={() => setShowInfo(false)} />}
     </div>
   )
 }

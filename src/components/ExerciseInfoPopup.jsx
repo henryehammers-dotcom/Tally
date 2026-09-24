@@ -12,7 +12,7 @@ function ExerciseVideo({ exercise }) {
 
   return (
     <div className="info-video">
-      {!ready && <div className="info-video-placeholder">video unavailable</div>}
+      {!ready && <div className="info-video-placeholder">video coming soon</div>}
       <video
         className="info-video-player"
         src={src}

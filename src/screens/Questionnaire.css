@@ -1,4 +1,4 @@
-.q-screen {
+.screen.q-screen {
   display: flex;
   flex-direction: column;
   min-height: 100%;

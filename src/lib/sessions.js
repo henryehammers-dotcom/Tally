@@ -91,6 +91,21 @@ export function logSet({ routineId, routineName, exerciseId, exerciseName, logTy
   return { day, session }
 }
 
+// Sets already logged for this exercise in the workout that's currently open
+// (same one-hour window logSet uses to decide whether to start a new session).
+export function getCurrentSetCount(routineId, exerciseId, dateKey = todayKey()) {
+  const day = getSessionDay(dateKey)
+  if (!day || day.isRestDay) return 0
+  const now = Date.now()
+  const session = [...day.sessions].reverse().find((s) => {
+    if (s.routineId !== routineId) return false
+    const lastSet = getLastSetTimestamp(s)
+    return !lastSet || now - new Date(lastSet).getTime() < ONE_HOUR_MS
+  })
+  const entry = session?.loggedExercises.find((e) => e.exerciseId === exerciseId)
+  return entry ? entry.sets.length : 0
+}
+
 export function editLoggedSet({ dateKey, sessionId, exerciseId, setIndex, newSetData }) {
   const day = getSessionDay(dateKey)
   if (!day) throw new Error('No data for that date')

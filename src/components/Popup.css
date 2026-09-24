@@ -71,3 +71,8 @@
   background: var(--off-white);
   color: var(--black);
 }
+
+.popup-btn-danger {
+  background: var(--color-danger-button);
+  color: white;
+}

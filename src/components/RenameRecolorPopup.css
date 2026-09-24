@@ -33,3 +33,14 @@
   font-size: 13px;
   font-weight: 600;
 }
+
+.popup-delete-link {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  color: var(--color-danger-button);
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+}

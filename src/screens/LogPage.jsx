@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getRoutineById } from '../lib/routines'
 import { getExerciseById } from '../lib/library'
-import { logSet } from '../lib/sessions'
+import { logSet, getCurrentSetCount } from '../lib/sessions'
 import './LogPage.css'
 
 function parseRestSeconds(restStr) {
@@ -20,6 +20,7 @@ export default function LogPage() {
   const [routine, setRoutine] = useState(null)
   const [exercise, setExercise] = useState(null)
   const [targets, setTargets] = useState(null)
+  const [setsLogged, setSetsLogged] = useState(0)
 
   const [reps, setReps] = useState('')
   const [weight, setWeight] = useState('')
@@ -42,6 +43,7 @@ export default function LogPage() {
     if (r) {
       const t = r.exercises.find((e) => e.exerciseId === exerciseId)
       setTargets(t)
+      setSetsLogged(getCurrentSetCount(routineId, exerciseId))
     }
   }, [routineId, exerciseId])
 
@@ -60,6 +62,7 @@ export default function LogPage() {
   const isCardio = exercise.type === 'cardio'
   const hasDistance = exercise.defaultDistance != null || targets.distance != null
   const restSeconds = !isCardio ? parseRestSeconds(targets.rest) : null
+  const countsSets = !isCardio
 
   function clearInputs() {
     setReps('')
@@ -127,6 +130,7 @@ export default function LogPage() {
       setData,
     })
 
+    setSetsLogged(getCurrentSetCount(routine.id, exercise.id))
     clearInputs()
     startRest()
   }
@@ -153,76 +157,88 @@ export default function LogPage() {
         </button>
       </div>
 
-      <div className="log-circle-wrap">
-        <svg className="log-circle-arc" width="220" height="220" viewBox="0 0 100 100">
-          <circle
-            cx="50" cy="50" r="46"
-            fill={routine.color}
-          />
-          <circle
-            className={resting ? 'rest-arc rest-arc-active' : 'rest-arc'}
-            cx="50" cy="50" r="46"
-            fill="none"
-            stroke="var(--amber)"
-            strokeWidth="5"
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={arcRunning ? 0 : circumference}
-            style={resting ? { transitionDuration: `${restTotal}s` } : undefined}
-            transform="rotate(-90 50 50)"
-          />
-        </svg>
-        <div className="log-circle-content">
-          {resting ? formatCountdown(restRemaining) : null}
+      <div className="log-circle-area">
+        <div className="log-circle">
+          <svg className="log-circle-arc" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="46" fill={routine.color} />
+            <circle
+              className={resting ? 'rest-arc rest-arc-active' : 'rest-arc'}
+              cx="50" cy="50" r="46"
+              fill="none"
+              stroke="var(--amber)"
+              strokeWidth="5"
+              strokeLinecap="round"
+              strokeDasharray={circumference}
+              strokeDashoffset={arcRunning ? 0 : circumference}
+              style={resting ? { transitionDuration: `${restTotal}s` } : undefined}
+              transform="rotate(-90 50 50)"
+            />
+          </svg>
+          <div className="log-circle-content">
+            {resting ? (
+              <>
+                <div className="log-circle-label">REST</div>
+                <div className={`log-circle-countdown ${formatCountdown(restRemaining).length > 4 ? 'log-circle-countdown-long' : ''}`}>
+                  {formatCountdown(restRemaining)}
+                </div>
+              </>
+            ) : countsSets ? (
+              <div className="log-circle-set">Set {setsLogged + 1}</div>
+            ) : null}
+          </div>
         </div>
       </div>
 
-      <div className="log-summary">
-        {exercise.logType === 'timed' ? (
-          <span>{targets.duration || exercise.defaultDuration} {!isCardio && `\u00b7 ${targets.rest} rest`}</span>
-        ) : (
-          <span>{targets.sets} sets &middot; {targets.reps} reps &middot; {targets.rest} rest</span>
-        )}
-        <button className="log-info-icon">ⓘ</button>
-      </div>
+      <div className="log-bottom">
+        <div className="log-summary">
+          {isCardio ? (
+            <span>{targets.duration || exercise.defaultDuration}</span>
+          ) : exercise.logType === 'timed' ? (
+            <span>{targets.sets} sets &middot; {targets.duration || exercise.defaultDuration} &middot; {targets.rest} rest</span>
+          ) : (
+            <span>{targets.sets} sets &middot; {targets.reps} reps &middot; {targets.rest} rest</span>
+          )}
+          <button className="log-info-icon">ⓘ</button>
+        </div>
 
-      {resting ? (
-        <button className="log-action-button" style={{ background: routine.color }} onClick={skipRest}>
-          REST
-        </button>
-      ) : (
-        <>
-          {exercise.logType === 'weighted' && (
-            <div className="log-inputs">
-              <input type="text" inputMode="numeric" placeholder="Reps" value={reps} onChange={(e) => setReps(e.target.value)} />
-              <input type="text" inputMode="numeric" placeholder="Weight" value={weight} onChange={(e) => setWeight(e.target.value)} />
-            </div>
-          )}
-          {exercise.logType === 'bodyweight' && (
-            <div className="log-inputs">
-              <input type="text" inputMode="numeric" placeholder="Reps" value={reps} onChange={(e) => setReps(e.target.value)} />
-            </div>
-          )}
-          {exercise.logType === 'timed' && (
-            <>
-              <div className="log-inputs log-inputs-time">
-                <input type="text" inputMode="numeric" placeholder="hr" value={hr} onChange={(e) => setHr(e.target.value)} />
-                <input type="text" inputMode="numeric" placeholder="min" value={min} onChange={(e) => setMin(e.target.value)} />
-                <input type="text" inputMode="numeric" placeholder="sec" value={sec} onChange={(e) => setSec(e.target.value)} />
-              </div>
-              {hasDistance && (
-                <div className="log-inputs">
-                  <input type="text" inputMode="decimal" placeholder="Miles" value={miles} onChange={(e) => setMiles(e.target.value)} />
-                </div>
-              )}
-            </>
-          )}
-
-          <button className="log-action-button" style={{ background: routine.color }} onClick={handleLog}>
-            {exercise.logType === 'timed' ? 'LOG' : 'LOG SETS'}
+        {resting ? (
+          <button className="log-action-button" style={{ background: routine.color }} onClick={skipRest}>
+            SKIP
           </button>
-        </>
-      )}
+        ) : (
+          <>
+            {exercise.logType === 'weighted' && (
+              <div className="log-inputs">
+                <input type="text" inputMode="numeric" placeholder="Reps" value={reps} onChange={(e) => setReps(e.target.value)} />
+                <input type="text" inputMode="numeric" placeholder="Weight" value={weight} onChange={(e) => setWeight(e.target.value)} />
+              </div>
+            )}
+            {exercise.logType === 'bodyweight' && (
+              <div className="log-inputs">
+                <input type="text" inputMode="numeric" placeholder="Reps" value={reps} onChange={(e) => setReps(e.target.value)} />
+              </div>
+            )}
+            {exercise.logType === 'timed' && (
+              <>
+                <div className="log-inputs log-inputs-time">
+                  <input type="text" inputMode="numeric" placeholder="hr" value={hr} onChange={(e) => setHr(e.target.value)} />
+                  <input type="text" inputMode="numeric" placeholder="min" value={min} onChange={(e) => setMin(e.target.value)} />
+                  <input type="text" inputMode="numeric" placeholder="sec" value={sec} onChange={(e) => setSec(e.target.value)} />
+                </div>
+                {hasDistance && (
+                  <div className="log-inputs">
+                    <input type="text" inputMode="decimal" placeholder="Miles" value={miles} onChange={(e) => setMiles(e.target.value)} />
+                  </div>
+                )}
+              </>
+            )}
+
+            <button className="log-action-button" style={{ background: routine.color }} onClick={handleLog}>
+              LOG IT
+            </button>
+          </>
+        )}
+      </div>
     </div>
   )
 }

@@ -107,7 +107,7 @@ export default function RoutinePage() {
 
       {routine.exercises.length === 0 ? (
         <div className="empty-state">
-          No exercises in this routine yet. Tap "+" to add some.
+          No exercises in this routine. Tap "Add" to add some.
         </div>
       ) : (
         <div className="routine-exercise-list">

@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { ROUTINE_COLOR_PALETTE as PALETTE } from '../lib/colors'
 import './RenameRecolorPopup.css'
 
-export default function RenameRecolorPopup({ routine, onSave, onClose }) {
+export default function RenameRecolorPopup({ routine, onSave, onDelete, onClose }) {
   const [name, setName] = useState(routine.name)
   const [color, setColor] = useState(routine.color)
   const [error, setError] = useState(null)
+  const [confirmingDelete, setConfirmingDelete] = useState(false)
 
   function handleSave() {
     if (!name.trim()) {
@@ -17,6 +18,23 @@ export default function RenameRecolorPopup({ routine, onSave, onClose }) {
     } catch (e) {
       setError(e.message)
     }
+  }
+
+  if (confirmingDelete) {
+    return (
+      <div className="popup-overlay" onClick={onClose}>
+        <div className="popup-card" onClick={(e) => e.stopPropagation()}>
+          <div className="popup-title">Delete "{routine.name}"?</div>
+          <div className="popup-message">
+            This removes the routine and its exercise list. Anything you've already logged stays in your history.
+          </div>
+          <div className="popup-actions">
+            <button className="popup-btn-secondary" onClick={() => setConfirmingDelete(false)}>Cancel</button>
+            <button className="popup-btn-danger" onClick={onDelete}>Delete</button>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -55,6 +73,12 @@ export default function RenameRecolorPopup({ routine, onSave, onClose }) {
           <button className="popup-btn-secondary" onClick={onClose}>Cancel</button>
           <button className="popup-btn-primary" onClick={handleSave}>Save</button>
         </div>
+
+        {onDelete && (
+          <button className="popup-delete-link" onClick={() => setConfirmingDelete(true)}>
+            Delete routine
+          </button>
+        )}
       </div>
     </div>
   )

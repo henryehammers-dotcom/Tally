@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './Timer.css'
 
-const ITEM_HEIGHT = 40
+const ITEM_HEIGHT = 52
 const VISIBLE_ITEMS = 3
 const PAD = (ITEM_HEIGHT * (VISIBLE_ITEMS - 1)) / 2
 
@@ -47,10 +47,9 @@ function DrumColumn({ max, value, onChange, label }) {
 function formatClock(totalSeconds) {
   const h = Math.floor(totalSeconds / 3600)
   const m = Math.floor((totalSeconds % 3600) / 60)
-  const s = totalSeconds % 60
-  if (h > 0) return `${h}hr ${m}m ${s}s`
-  if (m > 0) return `${m}m ${s}s`
-  return `${s}s`
+  const s = String(totalSeconds % 60).padStart(2, '0')
+  if (h > 0) return `${h}:${String(m).padStart(2, '0')}:${s}`
+  return `${m}:${s}`
 }
 
 // status: 'idle' | 'running' | 'paused'
@@ -140,16 +139,20 @@ export default function Timer() {
         <button className={`toggle-btn ${mode === 'stopwatch' ? 'toggle-active' : ''}`} onClick={() => switchMode('stopwatch')}>Stopwatch</button>
       </div>
 
-      <div className="timer-circle">
-        {isDrumScrollerVisible ? (
-          <div className="drum-scroller">
-            <DrumColumn max={24} value={hr} onChange={setHr} label="hr" />
-            <DrumColumn max={60} value={min} onChange={setMin} label="min" />
-            <DrumColumn max={60} value={sec} onChange={setSec} label="sec" />
-          </div>
-        ) : (
-          <div className="timer-clock">{formatClock(displaySeconds)}</div>
-        )}
+      <div className="timer-circle-area">
+        <div className="timer-circle">
+          {isDrumScrollerVisible ? (
+            <div className="drum-scroller">
+              <DrumColumn max={24} value={hr} onChange={setHr} label="hr" />
+              <DrumColumn max={60} value={min} onChange={setMin} label="min" />
+              <DrumColumn max={60} value={sec} onChange={setSec} label="sec" />
+            </div>
+          ) : (
+            <div className={`timer-clock ${formatClock(displaySeconds).length > 5 ? 'timer-clock-long' : ''}`}>
+              {formatClock(displaySeconds)}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="timer-buttons">

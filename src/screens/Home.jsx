@@ -4,7 +4,7 @@ import { getRoutines } from '../lib/storage'
 import { getRoutineUsageCounts, canMarkRestDay, toggleRestDay, hasLoggedToday, isRestDay } from '../lib/sessions'
 import { todayKey, formatMonthDay, formatDayOfWeek } from '../lib/dates'
 import { getProfile } from '../lib/storage'
-import { renameRoutine, recolorRoutine } from '../lib/routines'
+import { renameRoutine, recolorRoutine, deleteRoutine } from '../lib/routines'
 import { usePressTiers } from '../lib/usePressTiers'
 import RenameRecolorPopup from '../components/RenameRecolorPopup'
 import ZzzIcon from '../components/ZzzIcon'
@@ -133,6 +133,11 @@ export default function Home() {
         <RenameRecolorPopup
           routine={editingRoutine}
           onClose={() => setEditingRoutine(null)}
+          onDelete={() => {
+            deleteRoutine(editingRoutine.id)
+            setEditingRoutine(null)
+            refresh()
+          }}
           onSave={({ name, color }) => {
             if (name !== editingRoutine.name) {
               renameRoutine(editingRoutine.id, name)

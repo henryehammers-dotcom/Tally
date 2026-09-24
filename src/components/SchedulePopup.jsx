@@ -3,6 +3,7 @@ import { getRoutines, hasScheduleIntroBeenShown, markScheduleIntroShown } from '
 import {
   DAYS,
   MAX_ROUTINES_PER_DAY,
+  REST_ENTRY,
   getScheduledRoutines,
   addRoutineToDay,
   removeRoutineFromDay,
@@ -133,7 +134,7 @@ export default function SchedulePopup({ onClose }) {
               </button>
             </div>
           ))}
-          {routines.length < MAX_ROUTINES_PER_DAY && (
+          {routines.length < MAX_ROUTINES_PER_DAY && !routines.some((r) => r.isRest) && (
             <button className="schedule-add-row" onClick={() => setView({ name: 'pick', day: view.day, returnTo: 'day' })}>
               <span className="schedule-plus schedule-plus-small">
                 <svg width="14" height="14" viewBox="0 0 18 18">
@@ -154,6 +155,7 @@ export default function SchedulePopup({ onClose }) {
     const allRoutines = getRoutines()
     const taken = new Set(scheduled[view.day].map((r) => r.id))
     const choices = allRoutines.filter((r) => !taken.has(r.id))
+    const restBlocked = scheduled[view.day].length > 0
     card = (
       <>
         <CloseButton onClose={onClose} />
@@ -175,6 +177,19 @@ export default function SchedulePopup({ onClose }) {
             ))}
           </div>
         )}
+        <div className="schedule-day-list schedule-rest-list">
+          <button
+            className="schedule-choice"
+            disabled={restBlocked}
+            onClick={() => handlePick(view.day, REST_ENTRY, view.returnTo)}
+          >
+            <span className="schedule-day-item-dot" style={{ background: REST_ENTRY.color }} />
+            rest
+          </button>
+          {restBlocked && (
+            <div className="schedule-rest-note">Rest can't be added to a day that already has a routine.</div>
+          )}
+        </div>
         <div className="popup-actions">
           <button className="popup-btn-secondary" onClick={() => setView(view.returnTo === 'day' ? { name: 'day', day: view.day } : { name: 'week' })}>Back</button>
         </div>

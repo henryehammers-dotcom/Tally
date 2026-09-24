@@ -147,3 +147,25 @@
   margin-top: 14px;
   text-align: center;
 }
+
+.schedule-rest-list {
+  margin-top: 4px;
+  border-top: 1px solid var(--off-white);
+  padding-top: 4px;
+}
+
+.schedule-choice:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.schedule-choice:disabled:active {
+  background: none;
+}
+
+.schedule-rest-note {
+  font-size: 12px;
+  font-weight: 600;
+  color: #777;
+  padding: 0 6px 4px;
+}

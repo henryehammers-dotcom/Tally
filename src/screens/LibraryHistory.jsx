@@ -4,6 +4,7 @@ import {
 } from '../lib/dates'
 import { getDayActivitySummary, getSessionsForDate, getLoggedEntriesForExercise } from '../lib/sessions'
 import { getExerciseById } from '../lib/library'
+import { useInnerNav } from '../lib/innerNav'
 import { get7DayBarData } from '../lib/stats'
 import EditSetPopup from '../components/EditSetPopup'
 import ZzzIcon from '../components/ZzzIcon'
@@ -57,8 +58,11 @@ export default function LibraryHistory() {
   const [cursor, setCursor] = useState({ year: now.getFullYear(), monthIndex: now.getMonth() })
   const [selectedDateKey, setSelectedDateKey] = useState(null)
   const [browseMode, setBrowseMode] = useState('routine')
-  const [selectedSessionId, setSelectedSessionId] = useState(null)
-  const [selectedExerciseId, setSelectedExerciseId] = useState(null)
+  // The open session / exercise detail is part of the URL, so swiping back
+  // closes it (see useInnerNav).
+  const nav = useInnerNav()
+  const selectedSessionId = nav.get('session')
+  const selectedExerciseId = nav.get('exercise')
   const [distanceMode, setDistanceMode] = useState(false)
   const [editing, setEditing] = useState(null)
   const [refreshTick, setRefreshTick] = useState(0)
@@ -66,17 +70,19 @@ export default function LibraryHistory() {
 
   const cells = useMemo(() => getCalendarCells(cursor.year, cursor.monthIndex), [cursor, refreshTick])
 
+  function clearDetail() {
+    if (selectedSessionId || selectedExerciseId) nav.replace({ session: null, exercise: null })
+  }
+
   function selectDate(dateKey) {
     setSelectedDateKey(dateKey)
-    setSelectedSessionId(null)
-    setSelectedExerciseId(null)
+    clearDetail()
   }
 
   function changeMonth(delta) {
     setCursor((c) => addMonths(c.year, c.monthIndex, delta))
     setSelectedDateKey(null)
-    setSelectedSessionId(null)
-    setSelectedExerciseId(null)
+    clearDetail()
   }
 
   function refresh() {
@@ -171,13 +177,13 @@ export default function LibraryHistory() {
             <div className="history-filter-menu">
               <button
                 className={`history-filter-option ${browseMode === 'routine' ? 'history-filter-option-active' : ''}`}
-                onClick={() => { setBrowseMode('routine'); setSelectedExerciseId(null); setShowBrowseMenu(false) }}
+                onClick={() => { setBrowseMode('routine'); clearDetail(); setShowBrowseMenu(false) }}
               >
                 By Routine
               </button>
               <button
                 className={`history-filter-option ${browseMode === 'exercise' ? 'history-filter-option-active' : ''}`}
-                onClick={() => { setBrowseMode('exercise'); setShowBrowseMenu(false) }}
+                onClick={() => { setBrowseMode('exercise'); clearDetail(); setShowBrowseMenu(false) }}
               >
                 By Exercise
               </button>
@@ -200,7 +206,7 @@ export default function LibraryHistory() {
           {selectedDateKey && !selectedSession && daySessions.length > 0 && (
             <div className="history-session-list">
               {daySessions.map((s) => (
-                <button key={s.id} className="history-session-row" onClick={() => setSelectedSessionId(s.id)}>
+                <button key={s.id} className="history-session-row" onClick={() => nav.push({ session: s.id })}>
                   {s.routineName.toLowerCase()}
                 </button>
               ))}
@@ -208,7 +214,7 @@ export default function LibraryHistory() {
           )}
           {selectedSession && (
             <div>
-              <button className="back-link history-back" onClick={() => setSelectedSessionId(null)}>← {selectedSession.routineName.toLowerCase()}</button>
+              <button className="back-link history-back" onClick={() => nav.back({ session: null })}>← {selectedSession.routineName.toLowerCase()}</button>
               <div className="history-session-list">
                 {selectedSession.loggedExercises.map((entry) => {
                   const exercise = getExerciseById(entry.exerciseId)
@@ -255,7 +261,7 @@ export default function LibraryHistory() {
               {dayExercises.length > 0 && (
                 <div className="history-session-list">
                   {dayExercises.map((ex) => (
-                    <button key={ex.id} className="history-session-row" onClick={() => { setSelectedExerciseId(ex.id); setDistanceMode(false) }}>
+                    <button key={ex.id} className="history-session-row" onClick={() => { nav.push({ exercise: ex.id }); setDistanceMode(false) }}>
                       {ex.name}
                     </button>
                   ))}
@@ -266,7 +272,7 @@ export default function LibraryHistory() {
 
           {selectedExercise && (
             <div>
-              <button className="back-link history-back" onClick={() => setSelectedExerciseId(null)}>← {selectedExercise.name}</button>
+              <button className="back-link history-back" onClick={() => nav.back({ exercise: null })}>← {selectedExercise.name}</button>
 
               {exerciseHasDistance && (
                 <div className="history-browse-toggle">

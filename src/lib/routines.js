@@ -1,5 +1,6 @@
 import { getRoutines, saveRoutines } from './storage'
 import { presetRoutines } from './library'
+import { removeRoutineFromSchedule } from './schedule'
 
 function generateId() {
   return `routine-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
@@ -75,6 +76,7 @@ export function recolorRoutine(routineId, newColor) {
 export function deleteRoutine(routineId) {
   const routines = getRoutines().filter((r) => r.id !== routineId)
   saveRoutines(routines)
+  removeRoutineFromSchedule(routineId)
 }
 
 export function addExerciseToRoutine(routineId, exerciseId, targets) {

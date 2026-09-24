@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useInnerNav } from '../lib/innerNav'
 import { MUSCLE_GROUPS, getMuscleGroupColor, getExercisesByMuscleGroup, getAvailableFilters, presetRoutines, ALL_EXERCISES } from '../lib/library'
 import { createRoutineFromPreset, createRoutineFromScratch, addExerciseToRoutine, isNameTaken, getRoutineById } from '../lib/routines'
 import Popup from '../components/Popup'
@@ -20,17 +21,19 @@ function matchesFilters(exercise, filters) {
 
 export default function Library() {
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
-  const addToRoutineId = searchParams.get('addTo')
+  const nav = useInnerNav()
+  const addToRoutineId = nav.get('addTo')
   const addToRoutine = addToRoutineId ? getRoutineById(addToRoutineId) : null
-  const [tab, setTab] = useState('exercises')
-  const [activeMuscleGroup, setActiveMuscleGroup] = useState(null)
+  // Which inner view is showing lives in the URL (see useInnerNav).
+  const tab = nav.get('tab') === 'history' ? 'history' : 'exercises'
+  const groupParam = nav.get('group')
+  const activeMuscleGroup = MUSCLE_GROUPS.includes(groupParam) ? groupParam : null
+  const showSearch = nav.get('search') === '1'
+  const showPresetPicker = nav.get('presets') === '1'
   const [filters, setFilters] = useState({ types: [], equipment: [] })
   const [showFilters, setShowFilters] = useState(false)
-  const [showPresetPicker, setShowPresetPicker] = useState(false)
   const [showCreateChoice, setShowCreateChoice] = useState(false)
   const [showScratchForm, setShowScratchForm] = useState(false)
-  const [showSearch, setShowSearch] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [errorPopup, setErrorPopup] = useState(null)
   const [tradingCardExercise, setTradingCardExercise] = useState(null)
@@ -72,8 +75,7 @@ export default function Library() {
       suffix++
     }
     createRoutineFromPreset(preset.id, name)
-    setShowPresetPicker(false)
-    navigate('/home')
+    navigate('/home', { replace: true })
   }
 
   function handleCreateFromScratch({ name, color }) {
@@ -94,7 +96,7 @@ export default function Library() {
     return (
       <div className="screen">
         <div className="library-header">
-          <button className="back-link" onClick={() => { setShowSearch(false); setSearchQuery('') }}>← Search</button>
+          <button className="back-link" onClick={() => { nav.back({ search: null }); setSearchQuery('') }}>← Search</button>
         </div>
         <input
           className="search-input"
@@ -160,7 +162,7 @@ export default function Library() {
     return (
       <div className="screen">
         <div className="library-header">
-          <button className="back-link" onClick={() => setActiveMuscleGroup(null)}>← {activeMuscleGroup.toLowerCase()}</button>
+          <button className="back-link" onClick={() => nav.back({ group: null })}>← {activeMuscleGroup.toLowerCase()}</button>
           <button className={`filters-button ${filtersActive ? 'filters-button-active' : ''}`} onClick={() => setShowFilters(true)}>
             Filters{filtersActive ? ` (${filters.types.length + filters.equipment.length})` : ''}
           </button>
@@ -223,7 +225,7 @@ export default function Library() {
     return (
       <div className="screen">
         <div className="library-header">
-          <button className="back-link" onClick={() => setShowPresetPicker(false)}>← Choose a Preset</button>
+          <button className="back-link" onClick={() => nav.back({ presets: null })}>← Choose a Preset</button>
         </div>
         <div className="exercise-grid">
           {presetRoutines.map((p) => (
@@ -242,7 +244,7 @@ export default function Library() {
       <div className="library-header">
         <h1>Library</h1>
         <div className="library-header-actions">
-          <button className="search-button" onClick={() => setShowSearch(true)}>
+          <button className="search-button" onClick={() => nav.push({ search: '1' })}>
             <svg width="20" height="20" viewBox="0 0 20 20">
               <circle cx="8.5" cy="8.5" r="6.5" stroke="var(--black)" strokeWidth="2" fill="none" />
               <line x1="13.2" y1="13.2" x2="18" y2="18" stroke="var(--black)" strokeWidth="2" strokeLinecap="round" />
@@ -274,13 +276,17 @@ export default function Library() {
       <div className="toggle-row">
         <button
           className={`toggle-btn ${tab === 'exercises' ? 'toggle-active' : ''}`}
-          onClick={() => setTab('exercises')}
+          onClick={() => {
+            if (tab !== 'history') return
+            if (nav.get('session') || nav.get('exercise')) nav.replace({ tab: null, session: null, exercise: null })
+            else nav.back({ tab: null })
+          }}
         >
           Exercises
         </button>
         <button
           className={`toggle-btn ${tab === 'history' ? 'toggle-active' : ''}`}
-          onClick={() => setTab('history')}
+          onClick={() => { if (tab !== 'history') nav.push({ tab: 'history' }) }}
         >
           History
         </button>
@@ -293,7 +299,7 @@ export default function Library() {
               key={mg}
               className="muscle-bubble"
               style={{ background: getMuscleGroupColor(mg) }}
-              onClick={() => setActiveMuscleGroup(mg)}
+              onClick={() => nav.push({ group: mg })}
             >
               {mg.toLowerCase()}
             </button>
@@ -307,7 +313,7 @@ export default function Library() {
         <CreateRoutinePopup
           onClose={() => setShowCreateChoice(false)}
           onScratch={() => { setShowCreateChoice(false); setShowScratchForm(true) }}
-          onPreset={() => { setShowCreateChoice(false); setShowPresetPicker(true) }}
+          onPreset={() => { setShowCreateChoice(false); nav.push({ presets: '1' }) }}
         />
       )}
       {showScratchForm && (

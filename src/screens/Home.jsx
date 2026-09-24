@@ -7,6 +7,7 @@ import { getProfile } from '../lib/storage'
 import { renameRoutine, recolorRoutine, deleteRoutine } from '../lib/routines'
 import { usePressTiers } from '../lib/usePressTiers'
 import RenameRecolorPopup from '../components/RenameRecolorPopup'
+import SchedulePopup from '../components/SchedulePopup'
 import ZzzIcon from '../components/ZzzIcon'
 import './Home.css'
 
@@ -25,6 +26,7 @@ export default function Home() {
   const [restDayActive, setRestDayActive] = useState(false)
   const [restDayMessage, setRestDayMessage] = useState(null)
   const [editingRoutine, setEditingRoutine] = useState(null)
+  const [showSchedule, setShowSchedule] = useState(false)
 
   const dateKey = todayKey()
 
@@ -105,7 +107,10 @@ export default function Home() {
         <div className="rest-day-toast">{restDayMessage}</div>
       )}
 
-      <div className="routines-label">Your Routines</div>
+      <div className="routines-row">
+        <div className="routines-label">Your Routines</div>
+        <button className="schedule-button" onClick={() => setShowSchedule(true)}>Schedule</button>
+      </div>
 
       {sorted.length === 0 ? (
         <div className="empty-state">
@@ -130,6 +135,8 @@ export default function Home() {
           ))}
         </div>
       )}
+
+      {showSchedule && <SchedulePopup onClose={() => setShowSchedule(false)} />}
 
       {editingRoutine && (
         <RenameRecolorPopup

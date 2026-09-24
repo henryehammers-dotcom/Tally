@@ -1,0 +1,149 @@
+.schedule-card {
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
+}
+
+.popup-title.schedule-title {
+  text-align: center;
+  padding-right: 0;
+  margin-bottom: 14px;
+}
+
+.schedule-intro-message {
+  text-align: center;
+}
+
+.schedule-rule {
+  border-top: 1px solid var(--black);
+  margin: 0 8px 6px;
+}
+
+.schedule-week {
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 58px;
+}
+
+.schedule-day {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--black);
+  text-align: left;
+  min-width: 64px;
+  padding: 8px 0;
+}
+
+.schedule-day-today {
+  color: var(--cyan);
+}
+
+.schedule-value {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 0;
+  flex: 1;
+}
+
+.schedule-pill {
+  width: 116px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.schedule-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.schedule-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.schedule-plus {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.schedule-plus-small {
+  width: 26px;
+  height: 26px;
+}
+
+.schedule-day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.schedule-day-item,
+.schedule-choice,
+.schedule-add-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 6px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.schedule-day-item-name {
+  flex: 1;
+}
+
+.schedule-day-item-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.schedule-remove {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.schedule-choice {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.schedule-choice:active {
+  background: var(--off-white);
+}
+
+.schedule-empty {
+  margin-top: 14px;
+  text-align: center;
+}

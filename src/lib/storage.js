@@ -5,6 +5,8 @@ const KEYS = {
   ONBOARDING_COMPLETE: 'tally_onboarding_complete',
   PLUS_TOOLTIP_SHOWN: 'tally_plus_tooltip_shown',
   COMPARISON_OBJECT: 'tally_comparison_object',
+  SCHEDULE: 'tally_schedule',
+  SCHEDULE_INTRO_SHOWN: 'tally_schedule_intro_shown',
 }
 
 function read(key, fallback) {
@@ -79,6 +81,20 @@ export function saveComparisonObjectId(id) {
   return write(KEYS.COMPARISON_OBJECT, id)
 }
 
+// { "0": [routineId, ...], ... } where 0 = Monday ... 6 = Sunday.
+export function getSchedule() {
+  return read(KEYS.SCHEDULE, {})
+}
+export function saveSchedule(schedule) {
+  return write(KEYS.SCHEDULE, schedule)
+}
+export function hasScheduleIntroBeenShown() {
+  return read(KEYS.SCHEDULE_INTRO_SHOWN, false)
+}
+export function markScheduleIntroShown() {
+  return write(KEYS.SCHEDULE_INTRO_SHOWN, true)
+}
+
 export function exportAllData() {
   return {
     tallyup_backup: true,
@@ -89,6 +105,7 @@ export function exportAllData() {
       routines: getRoutines(),
       sessions: getAllSessionDays(),
       onboardingComplete: isOnboardingComplete(),
+      schedule: getSchedule(),
     },
   }
 }
@@ -97,10 +114,11 @@ export function restoreAllData(backupObject) {
   if (!backupObject || !backupObject.data) {
     throw new Error('Invalid backup file')
   }
-  const { profile, routines, sessions, onboardingComplete } = backupObject.data
+  const { profile, routines, sessions, onboardingComplete, schedule } = backupObject.data
   if (profile) saveProfile(profile)
   if (routines) saveRoutines(routines)
   if (sessions) saveAllSessionDays(sessions)
+  if (schedule) saveSchedule(schedule)
   write(KEYS.ONBOARDING_COMPLETE, !!onboardingComplete)
   return true
 }

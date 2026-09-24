@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Capacitor } from '@capacitor/core'
 import { STATUS_COLORS, holdStatusBarColor, releaseStatusBarColor } from '../lib/nativeStatusBar'
 import logo from '../assets/logo.json'
+import { pickZoomCell } from '../lib/splashTarget'
 import './SplashScreen.css'
 
 // Timeline (ms): logo alone -> logo lifts and "tally" fades in -> hold ->
@@ -44,6 +45,7 @@ export default function SplashScreen() {
     return visible
   })
   const [done, setDone] = useState(!show)
+  const [zoomCell] = useState(() => (show ? pickZoomCell(logo) : null))
   const overlayRef = useRef(null)
   const zoomRef = useRef(null)
   const groupRef = useRef(null)
@@ -159,7 +161,7 @@ export default function SplashScreen() {
     for (let col = 0; col < logo.columns; col++) {
       const key = `${row}-${col}`
       const isSmall = small.has(key)
-      const isZoomTarget = row === logo.zoomCell[0] && col === logo.zoomCell[1]
+      const isZoomTarget = zoomCell && row === zoomCell[0] && col === zoomCell[1]
       cells.push(
         <circle
           key={key}

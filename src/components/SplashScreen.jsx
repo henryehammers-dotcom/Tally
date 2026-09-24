@@ -8,7 +8,7 @@ import './SplashScreen.css'
 // zoom into a white dot until the screen is the next screen's color -> fade.
 const HOLD_START = 250
 const MOVE = 550
-const HOLD_END = 450
+const HOLD_END = 900
 const ZOOM = 650
 const FADE = 250
 // Lift is a fraction of the logo's width so it looks the same on every phone.

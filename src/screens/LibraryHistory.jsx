@@ -3,7 +3,7 @@ import {
   todayKey, getMonthLabel, addMonths, getCalendarCells, formatMonthDayYear, formatDayOfWeek,
 } from '../lib/dates'
 import { getDayActivitySummary, getSessionsForDate, getLoggedEntriesForExercise } from '../lib/sessions'
-import { getExerciseById, ALL_EXERCISES } from '../lib/library'
+import { getExerciseById } from '../lib/library'
 import { get7DayBarData } from '../lib/stats'
 import EditSetPopup from '../components/EditSetPopup'
 import ZzzIcon from '../components/ZzzIcon'
@@ -59,7 +59,6 @@ export default function LibraryHistory() {
   const [browseMode, setBrowseMode] = useState('routine')
   const [selectedSessionId, setSelectedSessionId] = useState(null)
   const [selectedExerciseId, setSelectedExerciseId] = useState(null)
-  const [exerciseQuery, setExerciseQuery] = useState('')
   const [distanceMode, setDistanceMode] = useState(false)
   const [editing, setEditing] = useState(null)
   const [refreshTick, setRefreshTick] = useState(0)
@@ -70,12 +69,14 @@ export default function LibraryHistory() {
   function selectDate(dateKey) {
     setSelectedDateKey(dateKey)
     setSelectedSessionId(null)
+    setSelectedExerciseId(null)
   }
 
   function changeMonth(delta) {
     setCursor((c) => addMonths(c.year, c.monthIndex, delta))
     setSelectedDateKey(null)
     setSelectedSessionId(null)
+    setSelectedExerciseId(null)
   }
 
   function refresh() {
@@ -106,9 +107,20 @@ export default function LibraryHistory() {
     })
   }, [entries])
 
-  const searchResults = exerciseQuery.trim()
-    ? ALL_EXERCISES.filter((ex) => ex.name.toLowerCase().includes(exerciseQuery.trim().toLowerCase())).slice(0, 12)
-    : []
+  const dayExercises = useMemo(() => {
+    const seen = new Map()
+    daySessions.forEach((session) => {
+      session.loggedExercises.forEach((entry) => {
+        if (!seen.has(entry.exerciseId)) {
+          seen.set(entry.exerciseId, {
+            id: entry.exerciseId,
+            name: getExerciseById(entry.exerciseId)?.name || entry.exerciseName,
+          })
+        }
+      })
+    })
+    return Array.from(seen.values())
+  }, [daySessions])
 
   return (
     <div className="history-root">
@@ -231,20 +243,24 @@ export default function LibraryHistory() {
         <div className="history-browse-section">
           {!selectedExercise && (
             <>
-              <input
-                className="search-input"
-                type="text"
-                placeholder="Search exercises..."
-                value={exerciseQuery}
-                onChange={(e) => setExerciseQuery(e.target.value)}
-              />
-              <div className="history-session-list">
-                {searchResults.map((ex) => (
-                  <button key={ex.id} className="history-session-row" onClick={() => { setSelectedExerciseId(ex.id); setDistanceMode(false) }}>
-                    {ex.name}
-                  </button>
-                ))}
-              </div>
+              {!selectedDateKey && (
+                <div className="empty-state">Pick a date on the calendar to see what you logged.</div>
+              )}
+              {selectedDateKey && daySummary?.isRestDay && (
+                <div className="empty-state">This day was marked as a rest day.</div>
+              )}
+              {selectedDateKey && !daySummary?.isRestDay && dayExercises.length === 0 && (
+                <div className="empty-state">No activity logged on {formatMonthDayYear(selectedDateKey)}.</div>
+              )}
+              {dayExercises.length > 0 && (
+                <div className="history-session-list">
+                  {dayExercises.map((ex) => (
+                    <button key={ex.id} className="history-session-row" onClick={() => { setSelectedExerciseId(ex.id); setDistanceMode(false) }}>
+                      {ex.name}
+                    </button>
+                  ))}
+                </div>
+              )}
             </>
           )}
 

@@ -1,33 +1,48 @@
+.music-header {
+  text-align: center;
+}
+
 .music-screen h1 {
-  font-size: 28px;
+  font-size: 36px;
   margin: 0;
 }
 
 .music-subtitle {
-  color: #888;
-  font-weight: 600;
-  font-size: 14px;
-  margin-top: 4px;
+  color: var(--black);
+  font-weight: 500;
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+/* A little more air between the title block and the page body. */
+.music-divider {
+  margin-top: 22px;
+  margin-bottom: 26px;
 }
 
 .eq-bar {
   display: flex;
   align-items: flex-end;
-  gap: 3px;
-  height: 20px;
-  margin-top: 16px;
+  justify-content: center;
+  gap: 6px;
+  height: 34px;
+  margin: 0 auto 30px;
 }
 
 .eq-bar span {
-  width: 4px;
+  width: 5px;
   background: var(--color-music-highlight);
-  border-radius: 2px;
+  border-radius: 3px;
+  transform-origin: bottom;
+}
+
+.eq-bar-playing span {
   animation: eq-bounce 0.9s ease-in-out infinite;
 }
 
-.eq-bar span:nth-child(1) { height: 40%; animation-delay: 0s; }
+.eq-bar span:nth-child(1) { height: 60%; animation-delay: 0s; }
 .eq-bar span:nth-child(2) { height: 100%; animation-delay: 0.15s; }
-.eq-bar span:nth-child(3) { height: 60%; animation-delay: 0.3s; }
+.eq-bar span:nth-child(3) { height: 45%; animation-delay: 0.3s; }
 .eq-bar span:nth-child(4) { height: 80%; animation-delay: 0.45s; }
 
 @keyframes eq-bounce {
@@ -38,17 +53,17 @@
 .music-card-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: 20px;
+  gap: 26px;
 }
 
 .music-card {
   background: white;
-  box-shadow: var(--shadow-card);
-  border-radius: var(--radius-card);
-  padding: 18px 20px;
-  text-align: left;
+  box-shadow: 6px 8px 16px rgba(35, 31, 32, 0.28);
+  border-radius: 14px;
+  padding: 42px 20px;
+  text-align: center;
   border: 2px solid transparent;
+  width: 100%;
 }
 
 .music-card-active {
@@ -56,20 +71,21 @@
 }
 
 .music-composer-name {
-  font-weight: 800;
-  font-size: 18px;
+  font-weight: 900;
+  font-size: 34px;
+  line-height: 1.1;
 }
 
 .music-card-duration {
-  font-size: 13px;
-  color: #888;
-  font-weight: 600;
-  margin-top: 4px;
+  font-size: 19px;
+  color: var(--black);
+  font-weight: 500;
+  margin-top: 12px;
 }
 
 .music-card-hint {
-  font-size: 12px;
-  color: #aaa;
+  font-size: 13px;
+  color: #777;
   font-weight: 600;
-  margin-top: 4px;
+  margin-top: 10px;
 }

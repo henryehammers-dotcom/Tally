@@ -1,11 +1,22 @@
 import { useState, useEffect } from 'react'
 import { composers } from '../lib/library'
-import { subscribe, tapComposer, fetchTracksFor } from '../lib/musicPlayer'
+import { subscribe, tapComposer } from '../lib/musicPlayer'
+import durations from '../../data/library/music-durations.json'
 import './Music.css'
 
-function EqBar() {
+// Regenerate music-durations.json with `python3 scripts/measure-music.py`
+// after adding or changing tracks.
+function formatTotalLength(seconds) {
+  const minutes = Math.round(seconds / 60)
+  if (minutes < 60) return `${minutes}m`
+  const hours = Math.floor(minutes / 60)
+  const rest = minutes % 60
+  return rest ? `${hours}hr ${rest}m` : `${hours}hr`
+}
+
+function EqBar({ playing }) {
   return (
-    <div className="eq-bar">
+    <div className={`eq-bar ${playing ? 'eq-bar-playing' : ''}`}>
       <span /><span /><span /><span />
     </div>
   )
@@ -13,32 +24,29 @@ function EqBar() {
 
 export default function Music() {
   const [player, setPlayer] = useState(null)
-  const [trackCounts, setTrackCounts] = useState({})
 
   useEffect(() => {
     const unsubscribe = subscribe(setPlayer)
     return unsubscribe
   }, [])
 
-  useEffect(() => {
-    let cancelled = false
-    Promise.all(composers.map((c) => fetchTracksFor(c.id).then((tracks) => [c.id, tracks.length])))
-      .then((entries) => { if (!cancelled) setTrackCounts(Object.fromEntries(entries)) })
-    return () => { cancelled = true }
-  }, [])
-
   return (
     <div className="screen music-screen">
-      <h1>Music</h1>
-      <div className="music-subtitle">Because your session needs a score</div>
+      <div className="music-header">
+        <h1>Music</h1>
+        <div className="music-subtitle">Because your session needs a score</div>
+      </div>
 
-      {player?.isPlaying && <EqBar />}
+      <div className="page-divider music-divider" />
+
+      <EqBar playing={!!player?.isPlaying} />
 
       <div className="music-card-list">
         {composers.map((c) => {
           const isCurrent = player?.composerId === c.id
           const isActivePlaying = isCurrent && player.isPlaying
           const hasNoTracks = isCurrent && player.noTracks
+          const totalSeconds = durations[c.id]
           return (
             <button
               key={c.id}
@@ -48,11 +56,9 @@ export default function Music() {
               <div className="music-composer-name" style={{ color: c.color }}>{c.composer}</div>
               {hasNoTracks ? (
                 <div className="music-card-hint">No tracks added yet — drop mp3s in {c.audioFolder}</div>
-              ) : c.duration ? (
-                <div className="music-card-duration">{c.duration}</div>
-              ) : (
-                <div className="music-card-duration">{trackCounts[c.id] ?? 0} tracks</div>
-              )}
+              ) : totalSeconds ? (
+                <div className="music-card-duration">{formatTotalLength(totalSeconds)}</div>
+              ) : null}
             </button>
           )
         })}

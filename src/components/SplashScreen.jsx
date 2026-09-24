@@ -5,13 +5,14 @@ import logo from '../assets/logo.json'
 import './SplashScreen.css'
 
 // Timeline (ms): logo alone -> logo lifts and "tally" fades in -> hold ->
-// zoom into a white dot until the screen is white -> fade to the app.
+// zoom into a white dot until the screen is the next screen's color -> fade.
 const HOLD_START = 250
 const MOVE = 550
 const HOLD_END = 450
 const ZOOM = 650
-const FADE = 200
-const LIFT = '-14vh'
+const FADE = 250
+// Lift is a fraction of the logo's width so it looks the same on every phone.
+const LIFT = 0.245
 
 const REDUCED_MOTION_HOLD = 900
 
@@ -28,12 +29,18 @@ function endBoot() {
   document.documentElement.classList.remove('booting')
 }
 
+// First-time users land on the (black) welcome screen, everyone else on the
+// app background; the zoom ends on that color so nothing changes at the swap.
+function destinationColor() {
+  return window.location.hash.startsWith('#/welcome') ? STATUS_COLORS.black : STATUS_COLORS.app
+}
+
 export default function SplashScreen() {
   const [show] = useState(() => {
     const visible = shouldShow()
     // Before the first effect runs, so screens mounting underneath can't
     // change the status bar while the splash is up.
-    if (visible) holdStatusBarColor(STATUS_COLORS.purple)
+    if (visible) holdStatusBarColor(STATUS_COLORS.black)
     return visible
   })
   const [done, setDone] = useState(!show)
@@ -63,7 +70,7 @@ export default function SplashScreen() {
       return a
     }
 
-    function finish() {
+    function finish(endColor) {
       if (cancelled) return
       const fade = run(overlayRef.current, [{ opacity: 1 }, { opacity: 0 }], { duration: FADE })
       fade.finished.then(() => {
@@ -75,12 +82,19 @@ export default function SplashScreen() {
 
     function zoomIntoDot() {
       if (cancelled) return
+      const endColor = destinationColor()
       const overlay = overlayRef.current.getBoundingClientRect()
       const dot = dotRef.current.getBoundingClientRect()
       const cx = dot.left + dot.width / 2 - overlay.left
       const cy = dot.top + dot.height / 2 - overlay.top
       const scale = (Math.hypot(overlay.width, overlay.height) / 2 / (dot.width / 2)) * 1.06
       zoomRef.current.style.transformOrigin = `${cx}px ${cy}px`
+      // The dot settles into the next screen's color as it fills the screen.
+      run(dotRef.current, [{ fill: logo.big }, { fill: endColor }], {
+        duration: ZOOM * 0.55,
+        delay: ZOOM * 0.45,
+        easing: 'linear',
+      })
       const zoom = run(
         zoomRef.current,
         [
@@ -91,25 +105,30 @@ export default function SplashScreen() {
       )
       zoom.finished.then(() => {
         if (cancelled) return
-        // Screen is solid white now: the top bar and the page underneath go
-        // white with it, so nothing at the edges changes color on its own.
-        holdStatusBarColor(STATUS_COLORS.white)
+        // Screen is solid endColor now: the top bar and the page underneath
+        // match it, so nothing at the edges changes color on its own.
+        overlayRef.current.style.background = endColor
+        holdStatusBarColor(endColor)
         endBoot()
-        finish()
+        finish(endColor)
       }).catch(() => {})
     }
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       wordRef.current.style.opacity = 1
-      groupRef.current.style.transform = `translateY(${LIFT})`
+      groupRef.current.style.transform = `translateY(${-LIFT * groupRef.current.offsetWidth}px)`
       later(() => {
+        const endColor = destinationColor()
+        overlayRef.current.style.background = endColor
+        holdStatusBarColor(endColor)
         endBoot()
-        finish()
+        finish(endColor)
       }, REDUCED_MOTION_HOLD)
     } else {
       // The zoom is measured from wherever the lift actually ended, so it
       // waits on the animation itself rather than a timer that could drift.
-      const lift = run(groupRef.current, [{ transform: 'translateY(0)' }, { transform: `translateY(${LIFT})` }], {
+      const liftPx = -LIFT * groupRef.current.offsetWidth
+      const lift = run(groupRef.current, [{ transform: 'translateY(0)' }, { transform: `translateY(${liftPx}px)` }], {
         duration: MOVE,
         delay: HOLD_START,
         easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
@@ -134,20 +153,21 @@ export default function SplashScreen() {
 
   if (done) return null
 
-  const white = new Set(logo.whiteCells.map(([r, c]) => `${r}-${c}`))
+  const small = new Set(logo.smallCells.map(([r, c]) => `${r}-${c}`))
   const cells = []
-  for (let row = 0; row < logo.grid; row++) {
-    for (let col = 0; col < logo.grid; col++) {
+  for (let row = 0; row < logo.rows; row++) {
+    for (let col = 0; col < logo.columns; col++) {
       const key = `${row}-${col}`
+      const isSmall = small.has(key)
       const isZoomTarget = row === logo.zoomCell[0] && col === logo.zoomCell[1]
       cells.push(
         <circle
           key={key}
           ref={isZoomTarget ? dotRef : undefined}
-          cx={col + 0.5}
-          cy={row + 0.5}
-          r={0.5}
-          fill={white.has(key) ? logo.white : logo.orange}
+          cx={logo.bigDiameter / 2 + col * logo.pitchX}
+          cy={logo.bigDiameter / 2 + row * logo.pitchY}
+          r={(isSmall ? logo.smallDiameter : logo.bigDiameter) / 2}
+          fill={isSmall ? logo.small : logo.big}
         />
       )
     }
@@ -157,7 +177,7 @@ export default function SplashScreen() {
     <div className="splash" ref={overlayRef}>
       <div className="splash-zoom" ref={zoomRef}>
         <div className="splash-group" ref={groupRef}>
-          <svg className="splash-logo" viewBox={`0 0 ${logo.grid} ${logo.grid}`} aria-hidden="true">
+          <svg className="splash-logo" viewBox={`0 0 ${logo.width} ${logo.height}`} aria-hidden="true">
             {cells}
           </svg>
           <div className="splash-word" ref={wordRef}>tally</div>

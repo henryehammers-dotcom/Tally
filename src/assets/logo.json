@@ -1,9 +1,17 @@
 {
-  "purple": "#8c52ff",
-  "orange": "#ffbd59",
-  "white": "#ffffff",
-  "grid": 4,
-  "whiteCells": [[0, 3], [1, 2], [2, 1], [3, 0]],
-  "zoomCell": [1, 2],
-  "logoWidth": 0.44
+  "background": "#231f20",
+  "big": "#ffffff",
+  "small": "#8c52ff",
+  "columns": 4,
+  "rows": 4,
+  "width": 627.5,
+  "height": 539,
+  "pitchX": 166.5,
+  "pitchY": 137,
+  "bigDiameter": 128,
+  "smallDiameter": 84,
+  "smallCells": [[0, 3], [1, 2], [2, 1], [3, 0]],
+  "zoomCell": [1, 1],
+  "logoWidth": 0.52,
+  "iconMarkWidth": 0.695
 }

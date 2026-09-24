@@ -5,21 +5,16 @@ import { STATUS_COLORS, setStatusBarColor } from '../lib/nativeStatusBar'
 export default function Welcome() {
   const [started, setStarted] = useState(false)
 
-  // Paints the page background blue too, so any strip iOS leaves outside the
-  // page area matches the welcome screen. Questionnaire is white.
+  // The welcome screen and the questionnaire are both black: paint the page
+  // background and the status bar to match so no edge shows a different color.
   useEffect(() => {
-    if (started) {
-      document.body.style.background = ''
-      setStatusBarColor(STATUS_COLORS.white)
-      return
-    }
-    document.body.style.background = '#0cc0df'
-    setStatusBarColor(STATUS_COLORS.blue)
+    document.body.style.background = STATUS_COLORS.black
+    setStatusBarColor(STATUS_COLORS.black)
     return () => {
       document.body.style.background = ''
-      setStatusBarColor(STATUS_COLORS.white)
+      setStatusBarColor(STATUS_COLORS.app)
     }
-  }, [started])
+  }, [])
 
   if (started) {
     return <Questionnaire />
@@ -30,7 +25,7 @@ export default function Welcome() {
       style={{
         minHeight: '100%',
         width: '100%',
-        background: '#0cc0df',
+        background: 'var(--black)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -48,7 +43,7 @@ export default function Welcome() {
         onClick={() => setStarted(true)}
         style={{
           background: 'white',
-          color: '#0cc0df',
+          color: 'var(--brand)',
           fontWeight: 800,
           padding: '14px 28px',
           borderRadius: 999,

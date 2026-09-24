@@ -244,8 +244,8 @@ export default function Library() {
         <div className="library-header-actions">
           <button className="search-button" onClick={() => setShowSearch(true)}>
             <svg width="20" height="20" viewBox="0 0 20 20">
-              <circle cx="8.5" cy="8.5" r="6.5" stroke="black" strokeWidth="2" fill="none" />
-              <line x1="13.2" y1="13.2" x2="18" y2="18" stroke="black" strokeWidth="2" strokeLinecap="round" />
+              <circle cx="8.5" cy="8.5" r="6.5" stroke="var(--black)" strokeWidth="2" fill="none" />
+              <line x1="13.2" y1="13.2" x2="18" y2="18" stroke="var(--black)" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </button>
           {!addToRoutineId && (
@@ -268,6 +268,8 @@ export default function Library() {
           )}
         </div>
       </div>
+
+      <div className="page-divider" />
 
       <div className="toggle-row">
         <button

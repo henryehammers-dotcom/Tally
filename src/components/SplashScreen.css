@@ -1,9 +1,9 @@
 .splash {
-  --logo-width: min(44vw, 260px);
+  --logo-width: min(52vw, 300px);
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: #8c52ff;
+  background: #231f20;
   overflow: hidden;
 }
 
@@ -38,11 +38,11 @@
   top: 100%;
   left: 0;
   right: 0;
-  margin-top: calc(var(--logo-width) * 0.14);
+  margin-top: calc(var(--logo-width) * 0.15);
   text-align: center;
   color: #fff;
   font-weight: 600;
-  font-size: calc(var(--logo-width) * 0.5);
+  font-size: calc(var(--logo-width) * 0.355);
   line-height: 1;
   letter-spacing: -0.01em;
   opacity: 0;

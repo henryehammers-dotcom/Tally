@@ -1,4 +1,6 @@
 .screen.q-screen {
+  background: var(--black);
+  color: white;
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -79,7 +81,7 @@
 }
 
 .q-option-selected {
-  background: var(--cyan);
+  background: var(--brand);
   color: white;
 }
 
@@ -100,7 +102,7 @@
 }
 
 .q-chip-selected {
-  background: var(--cyan);
+  background: var(--brand);
   color: white;
 }
 
@@ -120,13 +122,13 @@
 }
 
 .q-btn-primary {
-  background: var(--cyan);
+  background: var(--brand);
   color: white;
 }
 
 .q-btn-primary:disabled {
-  background: var(--off-white);
-  color: #aaa;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .q-btn-secondary {

@@ -92,7 +92,7 @@ export default function RoutinePage() {
         <div className="routine-header-actions">
           <button className="back-button" onClick={() => navigate('/home')}>
             <svg width="18" height="18" viewBox="0 0 18 18">
-              <path d="M11 3L5 9L11 15" stroke="black" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              <path d="M11 3L5 9L11 15" stroke="var(--black)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
             </svg>
           </button>
           <button

@@ -54,8 +54,8 @@ export default function EditSetPopup({ exercise, dateKey, sessionId, set, setInd
       <div className="popup-card" onClick={(e) => e.stopPropagation()}>
         <button className="popup-close" onClick={onClose}>
           <svg width="16" height="16" viewBox="0 0 16 16">
-            <line x1="2" y1="2" x2="14" y2="14" stroke="black" strokeWidth="2" strokeLinecap="round" />
-            <line x1="14" y1="2" x2="2" y2="14" stroke="black" strokeWidth="2" strokeLinecap="round" />
+            <line x1="2" y1="2" x2="14" y2="14" stroke="var(--black)" strokeWidth="2" strokeLinecap="round" />
+            <line x1="14" y1="2" x2="2" y2="14" stroke="var(--black)" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </button>
         <div className="popup-title">Edit Logged Set</div>

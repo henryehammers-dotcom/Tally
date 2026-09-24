@@ -151,8 +151,8 @@ export default function LogPage() {
         <div className="log-title">{exercise.name}</div>
         <button className="log-close" onClick={() => navigate(-1)}>
           <svg width="18" height="18" viewBox="0 0 18 18">
-            <line x1="2" y1="2" x2="16" y2="16" stroke="black" strokeWidth="2" strokeLinecap="round" />
-            <line x1="16" y1="2" x2="2" y2="16" stroke="black" strokeWidth="2" strokeLinecap="round" />
+            <line x1="2" y1="2" x2="16" y2="16" stroke="var(--black)" strokeWidth="2" strokeLinecap="round" />
+            <line x1="16" y1="2" x2="2" y2="16" stroke="var(--black)" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </button>
       </div>

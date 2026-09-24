@@ -98,8 +98,8 @@ export default defineConfig({
         description: 'Build your own routines. Track every rep.',
         start_url: '/Tally/',
         scope: '/Tally/',
-        theme_color: '#8c52ff',
-        background_color: '#8c52ff',
+        theme_color: '#231f20',
+        background_color: '#231f20',
         display: 'standalone',
         icons: icon
           ? [

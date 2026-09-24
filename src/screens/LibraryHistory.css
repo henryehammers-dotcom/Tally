@@ -62,7 +62,7 @@
 }
 
 .history-cell-today .history-day-num {
-  color: var(--cyan);
+  color: var(--brand);
   font-weight: 800;
 }
 

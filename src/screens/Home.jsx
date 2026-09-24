@@ -99,6 +99,8 @@ export default function Home() {
         </div>
       </div>
 
+      <div className="page-divider" />
+
       {restDayMessage && (
         <div className="rest-day-toast">{restDayMessage}</div>
       )}

@@ -4,6 +4,7 @@ const KEYS = {
   SESSIONS: 'tally_sessions',
   ONBOARDING_COMPLETE: 'tally_onboarding_complete',
   PLUS_TOOLTIP_SHOWN: 'tally_plus_tooltip_shown',
+  COMPARISON_OBJECT: 'tally_comparison_object',
 }
 
 function read(key, fallback) {
@@ -69,6 +70,13 @@ export function hasPlusTooltipBeenShown() {
 }
 export function markPlusTooltipShown() {
   return write(KEYS.PLUS_TOOLTIP_SHOWN, true)
+}
+
+export function getComparisonObjectId() {
+  return read(KEYS.COMPARISON_OBJECT, null)
+}
+export function saveComparisonObjectId(id) {
+  return write(KEYS.COMPARISON_OBJECT, id)
 }
 
 export function exportAllData() {

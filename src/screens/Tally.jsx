@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { getProfile } from '../lib/storage'
+import { getProfile, getComparisonObjectId, saveComparisonObjectId } from '../lib/storage'
 import { getCurrentStreak, getDaysLoggedCount, isRestDay, hasLoggedToday } from '../lib/sessions'
 import { getCurrentWeekDates } from '../lib/dates'
 import { getRecentPRs, getAvgSessionLengthMinutes, getTotalWeightLifted, formatSessionLength } from '../lib/stats'
@@ -51,7 +51,10 @@ export default function Tally() {
   const [showAllPRs, setShowAllPRs] = useState(false)
   const [showWeekLengths, setShowWeekLengths] = useState(false)
   const [showComparisonPicker, setShowComparisonPicker] = useState(false)
-  const [comparisonId, setComparisonId] = useState(comparisonObjects[0].id)
+  const [comparisonId, setComparisonId] = useState(() => {
+    const saved = getComparisonObjectId()
+    return comparisonObjects.some((o) => o.id === saved) ? saved : comparisonObjects[0].id
+  })
 
   const recentPRs = getRecentPRs(3)
   const avgMinutes = getAvgSessionLengthMinutes()
@@ -157,7 +160,7 @@ export default function Tally() {
       {showComparisonPicker && (
         <ComparisonPickerPopup
           selectedId={comparisonId}
-          onSelect={(id) => { setComparisonId(id); setShowComparisonPicker(false) }}
+          onSelect={(id) => { setComparisonId(id); saveComparisonObjectId(id); setShowComparisonPicker(false) }}
           onClose={() => setShowComparisonPicker(false)}
         />
       )}

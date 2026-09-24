@@ -96,6 +96,7 @@
 }
 
 .log-circle-countdown {
+  font-variant-numeric: tabular-nums;
   font-size: 30cqw;
 }
 

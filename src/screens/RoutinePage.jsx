@@ -87,7 +87,7 @@ export default function RoutinePage() {
       <div className="routine-header">
         <div className="routine-header-title">
           <div className="routine-subtitle">Today's workout is</div>
-          <div className="routine-title">{routine.name}</div>
+          <div className="routine-title">{routine.name.toLowerCase()}</div>
         </div>
         <div className="routine-header-actions">
           <button className="back-button" onClick={() => navigate('/home')}>

@@ -189,14 +189,14 @@ export default function LibraryHistory() {
             <div className="history-session-list">
               {daySessions.map((s) => (
                 <button key={s.id} className="history-session-row" onClick={() => setSelectedSessionId(s.id)}>
-                  {s.routineName}
+                  {s.routineName.toLowerCase()}
                 </button>
               ))}
             </div>
           )}
           {selectedSession && (
             <div>
-              <button className="back-link history-back" onClick={() => setSelectedSessionId(null)}>← {selectedSession.routineName}</button>
+              <button className="back-link history-back" onClick={() => setSelectedSessionId(null)}>← {selectedSession.routineName.toLowerCase()}</button>
               <div className="history-session-list">
                 {selectedSession.loggedExercises.map((entry) => {
                   const exercise = getExerciseById(entry.exerciseId)

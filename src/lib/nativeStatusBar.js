@@ -1,11 +1,31 @@
 import { Capacitor } from '@capacitor/core'
 import { StatusBar, Style } from '@capacitor/status-bar'
 
-// The web app can only hint the status bar color via theme-color; the native
-// iOS app can also set the text style. Blue on the Welcome screen, white
-// everywhere else.
-export function setStatusBarOnBlue(onBlue) {
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', onBlue ? '#0cc0df' : '#ffffff')
+export const STATUS_COLORS = { white: '#ffffff', blue: '#0cc0df', purple: '#8c52ff' }
+
+let holding = false
+let desired = STATUS_COLORS.white
+
+function apply(color) {
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', color)
   if (!Capacitor.isNativePlatform()) return
-  StatusBar.setStyle({ style: onBlue ? Style.Dark : Style.Light }).catch(() => {})
+  const onWhite = color.toLowerCase() === STATUS_COLORS.white
+  StatusBar.setStyle({ style: onWhite ? Style.Light : Style.Dark }).catch(() => {})
+}
+
+// Screens declare the color their top edge should be; the splash animation
+// holds the status bar (purple, then white) and ignores them until it's done.
+export function setStatusBarColor(color) {
+  desired = color
+  if (!holding) apply(color)
+}
+
+export function holdStatusBarColor(color) {
+  holding = true
+  apply(color)
+}
+
+export function releaseStatusBarColor() {
+  holding = false
+  apply(desired)
 }

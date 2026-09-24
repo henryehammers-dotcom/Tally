@@ -19,7 +19,7 @@ export function createRoutineFromScratch(name, color) {
   const routines = getRoutines()
   const newRoutine = {
     id: generateId(),
-    name: name.trim(),
+    name: name.trim().toLowerCase(),
     color,
     createdAt: new Date().toISOString(),
     exercises: [],
@@ -33,7 +33,7 @@ export function createRoutineFromPreset(presetId, overrideName = null) {
   const preset = presetRoutines.find((p) => p.id === presetId)
   if (!preset) throw new Error('Preset not found')
 
-  const name = overrideName || preset.name
+  const name = (overrideName || preset.name).trim().toLowerCase()
   if (isNameTaken(name)) {
     throw new Error(`A routine named "${name}" already exists`)
   }
@@ -58,7 +58,7 @@ export function renameRoutine(routineId, newName) {
   const routines = getRoutines()
   const routine = routines.find((r) => r.id === routineId)
   if (!routine) throw new Error('Routine not found')
-  routine.name = newName.trim()
+  routine.name = newName.trim().toLowerCase()
   saveRoutines(routines)
   return routine
 }

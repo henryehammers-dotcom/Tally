@@ -35,7 +35,8 @@ export default function NewRoutineForm({ title = 'New Routine', onCreate, onClos
           className="rename-input"
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value.toLowerCase())}
+          autoCapitalize="none"
           placeholder="Routine name"
           autoFocus
         />

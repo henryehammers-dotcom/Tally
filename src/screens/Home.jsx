@@ -166,7 +166,7 @@ function RoutineBubble({ routine, onOpen, onLongPress }) {
       style={{ background: routine.color }}
       {...press}
     >
-      {routine.name}
+      {routine.name.toLowerCase()}
     </button>
   )
 }

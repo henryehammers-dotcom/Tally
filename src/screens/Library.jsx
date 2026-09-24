@@ -64,10 +64,11 @@ export default function Library() {
   }
 
   function handlePickPreset(preset) {
-    let name = preset.name
+    const base = preset.name.toLowerCase()
+    let name = base
     let suffix = 2
     while (isNameTaken(name)) {
-      name = `${preset.name} ${suffix}`
+      name = `${base} ${suffix}`
       suffix++
     }
     createRoutineFromPreset(preset.id, name)
@@ -159,7 +160,7 @@ export default function Library() {
     return (
       <div className="screen">
         <div className="library-header">
-          <button className="back-link" onClick={() => setActiveMuscleGroup(null)}>← {activeMuscleGroup}</button>
+          <button className="back-link" onClick={() => setActiveMuscleGroup(null)}>← {activeMuscleGroup.toLowerCase()}</button>
           <button className={`filters-button ${filtersActive ? 'filters-button-active' : ''}`} onClick={() => setShowFilters(true)}>
             Filters{filtersActive ? ` (${filters.types.length + filters.equipment.length})` : ''}
           </button>
@@ -228,7 +229,7 @@ export default function Library() {
           {presetRoutines.map((p) => (
             <button key={p.id} className="exercise-card" onClick={() => handlePickPreset(p)}>
               <div className="exercise-circle" style={{ background: p.color }} />
-              <div className="exercise-name">{p.name}</div>
+              <div className="exercise-name">{p.name.toLowerCase()}</div>
             </button>
           ))}
         </div>
@@ -289,10 +290,10 @@ export default function Library() {
             <button
               key={mg}
               className="muscle-bubble"
-              style={{ background: getMuscleGroupColor(mg), fontSize: mg === 'Shoulders' ? 22 : undefined }}
+              style={{ background: getMuscleGroupColor(mg) }}
               onClick={() => setActiveMuscleGroup(mg)}
             >
-              {mg}
+              {mg.toLowerCase()}
             </button>
           ))}
         </div>

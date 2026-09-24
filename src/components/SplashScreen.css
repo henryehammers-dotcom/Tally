@@ -1,25 +1,49 @@
 .splash {
+  --logo-width: min(44vw, 260px);
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: var(--cyan);
+  background: #8c52ff;
+  overflow: hidden;
+}
+
+/* Centered on the screen. The page can sit below the status bar while iOS's
+   own launch image is centered on the full screen, so the content is nudged
+   up by half that offset to line the two up exactly. */
+.splash-zoom {
+  position: absolute;
+  inset: 0;
+  padding-bottom: var(--splash-offset, 0px);
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 1;
-  transition: opacity 0.4s ease;
+  will-change: transform;
 }
 
-.splash-fade {
-  opacity: 0;
-  pointer-events: none;
+.splash-group {
+  position: relative;
+  width: var(--logo-width);
+  will-change: transform;
 }
 
-.splash-mark {
-  width: 30vw;
-  height: auto;
+.splash-logo {
   display: block;
-  /* iOS's own splash image is centered on the full screen; the page can sit
-     below the status bar, so nudge the mark up by half that offset. */
-  transform: translateY(calc(var(--splash-offset, 0px) / -2));
+  width: 100%;
+  height: auto;
+}
+
+/* Absolutely placed so the logo alone is centered until the text appears. */
+.splash-word {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: calc(var(--logo-width) * 0.14);
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: calc(var(--logo-width) * 0.5);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  opacity: 0;
 }

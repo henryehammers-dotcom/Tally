@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Questionnaire from './Questionnaire'
-import { setStatusBarOnBlue } from '../lib/nativeStatusBar'
+import { STATUS_COLORS, setStatusBarColor } from '../lib/nativeStatusBar'
 
 export default function Welcome() {
   const [started, setStarted] = useState(false)
@@ -10,14 +10,14 @@ export default function Welcome() {
   useEffect(() => {
     if (started) {
       document.body.style.background = ''
-      setStatusBarOnBlue(false)
+      setStatusBarColor(STATUS_COLORS.white)
       return
     }
     document.body.style.background = '#0cc0df'
-    setStatusBarOnBlue(true)
+    setStatusBarColor(STATUS_COLORS.blue)
     return () => {
       document.body.style.background = ''
-      setStatusBarOnBlue(false)
+      setStatusBarColor(STATUS_COLORS.white)
     }
   }, [started])
 

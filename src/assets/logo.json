@@ -1,0 +1,9 @@
+{
+  "purple": "#8c52ff",
+  "orange": "#ffbd59",
+  "white": "#ffffff",
+  "grid": 4,
+  "whiteCells": [[0, 3], [1, 2], [2, 1], [3, 0]],
+  "zoomCell": [1, 2],
+  "logoWidth": 0.44
+}

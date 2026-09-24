@@ -40,6 +40,7 @@
 }
 
 .timer-clock {
+  font-variant-numeric: tabular-nums;
   color: white;
   font-weight: 800;
   font-size: 26cqw;

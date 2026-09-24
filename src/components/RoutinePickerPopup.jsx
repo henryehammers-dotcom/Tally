@@ -64,7 +64,7 @@ export default function RoutinePickerPopup({ exercise, onClose, onAdded }) {
           {routines.map((r) => (
             <button key={r.id} className="routine-picker-row" onClick={() => handlePick(r)}>
               <span className="routine-picker-dot" style={{ background: r.color }} />
-              {r.name}
+              {r.name.toLowerCase()}
             </button>
           ))}
           <button className="routine-picker-row routine-picker-create" onClick={() => setShowCreate(true)}>

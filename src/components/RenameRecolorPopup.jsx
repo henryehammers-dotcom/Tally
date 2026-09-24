@@ -24,7 +24,7 @@ export default function RenameRecolorPopup({ routine, onSave, onDelete, onClose 
     return (
       <div className="popup-overlay" onClick={onClose}>
         <div className="popup-card" onClick={(e) => e.stopPropagation()}>
-          <div className="popup-title">Delete "{routine.name}"?</div>
+          <div className="popup-title">Delete "{routine.name.toLowerCase()}"?</div>
           <div className="popup-message">
             This removes the routine and its exercise list. Anything you've already logged stays in your history.
           </div>
@@ -52,7 +52,8 @@ export default function RenameRecolorPopup({ routine, onSave, onDelete, onClose 
           className="rename-input"
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value.toLowerCase())}
+          autoCapitalize="none"
           placeholder="Routine name"
         />
 

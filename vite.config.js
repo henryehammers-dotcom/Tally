@@ -89,6 +89,7 @@ export default defineConfig({
         clientsClaim: true,
         skipWaiting: true,
         cleanupOutdatedCaches: true,
+        globPatterns: ['**/*.{js,css,html,woff2}'],
       },
       includeAssets: icon ? [icon.filename] : [],
       manifest: {
@@ -97,8 +98,8 @@ export default defineConfig({
         description: 'Build your own routines. Track every rep.',
         start_url: '/Tally/',
         scope: '/Tally/',
-        theme_color: '#0cc0df',
-        background_color: '#0cc0df',
+        theme_color: '#8c52ff',
+        background_color: '#8c52ff',
         display: 'standalone',
         icons: icon
           ? [

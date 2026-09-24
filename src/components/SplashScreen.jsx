@@ -15,10 +15,12 @@ const FADE = 250
 // Lift is a fraction of the logo's width so it looks the same on every phone.
 const LIFT = 0.245
 
-// iOS updates the top bar a beat after the page asks for a new color, so the
-// switch happens while the zoom is still covering the screen (this far
-// through it) rather than when the splash is already gone.
-const STATUS_BAR_LEAD = 0.45
+// The status bar belongs to iOS, not the page, so nothing can cover it: it has
+// to change at the same moment as the screen. iOS applies a requested color
+// about 0.3-0.6s late (measured from a screen recording), so the request goes
+// out this far into the zoom, early enough that the bar's change lands just as
+// the light screen arrives. Tune this if the bar still leads or lags.
+const STATUS_BAR_LEAD = 0.1
 
 const REDUCED_MOTION_HOLD = 900
 

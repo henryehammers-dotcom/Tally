@@ -6,7 +6,7 @@ import './SplashScreen.css'
 
 // Timeline (ms): logo alone -> logo lifts and "tally" fades in -> hold ->
 // zoom into a white dot until the screen is the next screen's color -> fade.
-const HOLD_START = 450
+const HOLD_START = 700
 const MOVE = 550
 const HOLD_END = 900
 const ZOOM = 650

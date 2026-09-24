@@ -15,6 +15,11 @@ const FADE = 250
 // Lift is a fraction of the logo's width so it looks the same on every phone.
 const LIFT = 0.245
 
+// iOS updates the top bar a beat after the page asks for a new color, so the
+// switch happens while the zoom is still covering the screen (this far
+// through it) rather than when the splash is already gone.
+const STATUS_BAR_LEAD = 0.45
+
 const REDUCED_MOTION_HOLD = 900
 
 function shouldShow() {
@@ -51,6 +56,7 @@ export default function SplashScreen() {
   const groupRef = useRef(null)
   const wordRef = useRef(null)
   const dotRef = useRef(null)
+  const bgRef = useRef(null)
 
   useEffect(() => {
     if (!show) {
@@ -105,11 +111,17 @@ export default function SplashScreen() {
         ],
         { duration: ZOOM, easing: 'cubic-bezier(0.6, 0, 0.9, 0.5)' }
       )
+      // The dot is already covering most of the screen by now, so the page
+      // underneath and the top bar can take the destination color without
+      // it being visible.
+      later(() => {
+        endBoot()
+        holdStatusBarColor(endColor)
+      }, ZOOM * STATUS_BAR_LEAD)
       zoom.finished.then(() => {
         if (cancelled) return
-        // Screen is solid endColor now: the top bar and the page underneath
-        // match it, so nothing at the edges changes color on its own.
-        overlayRef.current.style.background = endColor
+        // Screen is solid endColor now.
+        bgRef.current.style.background = endColor
         holdStatusBarColor(endColor)
         endBoot()
         finish(endColor)
@@ -121,7 +133,7 @@ export default function SplashScreen() {
       groupRef.current.style.transform = `translateY(${-LIFT * groupRef.current.offsetWidth}px)`
       later(() => {
         const endColor = destinationColor()
-        overlayRef.current.style.background = endColor
+        bgRef.current.style.background = endColor
         holdStatusBarColor(endColor)
         endBoot()
         finish(endColor)
@@ -177,6 +189,7 @@ export default function SplashScreen() {
 
   return (
     <div className="splash" ref={overlayRef}>
+      <div className="splash-bg" ref={bgRef} />
       <div className="splash-zoom" ref={zoomRef}>
         <div className="splash-group" ref={groupRef}>
           <svg className="splash-logo" viewBox={`0 0 ${logo.width} ${logo.height}`} aria-hidden="true">

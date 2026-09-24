@@ -3,8 +3,15 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: #231f20;
   overflow: hidden;
+}
+
+/* The color lives on its own layer, so the fixed overlay itself is
+   transparent and doesn't tint the top bar independently. */
+.splash-bg {
+  position: absolute;
+  inset: 0;
+  background: #231f20;
 }
 
 /* Centered on the screen. The page can sit below the status bar while iOS's

@@ -17,10 +17,10 @@ const LIFT = 0.245
 
 // The status bar belongs to iOS, not the page, so nothing can cover it: it has
 // to change at the same moment as the screen. iOS applies a requested color
-// about 0.3-0.6s late (measured from a screen recording), so the request goes
-// out this far into the zoom, early enough that the bar's change lands just as
-// the light screen arrives. Tune this if the bar still leads or lags.
-const STATUS_BAR_LEAD = 0.1
+// roughly 0.7s late (worked out from screen recordings), so the request goes out
+// this many ms BEFORE the zoom starts, so the bar's change lands just as the
+// light screen arrives. Raise it if the bar still lags, lower it if it leads.
+const STATUS_BAR_ADVANCE_MS = 250
 
 const REDUCED_MOTION_HOLD = 900
 
@@ -113,13 +113,6 @@ export default function SplashScreen() {
         ],
         { duration: ZOOM, easing: 'cubic-bezier(0.6, 0, 0.9, 0.5)' }
       )
-      // The dot is already covering most of the screen by now, so the page
-      // underneath and the top bar can take the destination color without
-      // it being visible.
-      later(() => {
-        endBoot()
-        holdStatusBarColor(endColor)
-      }, ZOOM * STATUS_BAR_LEAD)
       zoom.finished.then(() => {
         if (cancelled) return
         // Screen is solid endColor now.
@@ -157,7 +150,15 @@ export default function SplashScreen() {
         ],
         { duration: 380, delay: HOLD_START + MOVE * 0.4, easing: 'ease-out' }
       )
-      lift.finished.then(() => later(zoomIntoDot, HOLD_END)).catch(() => {})
+      lift.finished.then(() => {
+        later(zoomIntoDot, HOLD_END)
+        // Ask iOS for the destination color ahead of the zoom (see above). The
+        // page underneath is hidden by the splash, so it can change now too.
+        later(() => {
+          endBoot()
+          holdStatusBarColor(destinationColor())
+        }, Math.max(0, HOLD_END - STATUS_BAR_ADVANCE_MS))
+      }).catch(() => {})
     }
 
     return () => {

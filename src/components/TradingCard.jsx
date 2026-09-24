@@ -45,8 +45,8 @@ export default function TradingCard({ exercise, color, targets, actionLabel, onA
         </button>
 
         <div className="trading-circle" style={{ background: color }} />
-        <div className="trading-name-row">
-          <div className="trading-name">{exercise.name}</div>
+        <div className="trading-name">
+          {exercise.name}{' '}
           <InfoIcon onClick={() => setShowInfo(true)} />
         </div>
 

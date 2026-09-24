@@ -150,8 +150,8 @@ export default function LogPage() {
   return (
     <div className="screen log-screen">
       <div className="log-header">
-        <div className="log-title-group">
-          <div className="log-title">{exercise.name}</div>
+        <div className="log-title">
+          {exercise.name}{' '}
           <button className="log-info-button" onClick={() => setShowInfo(true)} aria-label="How to do this exercise">
             <svg width="26" height="26" viewBox="0 0 26 26">
               <circle cx="13" cy="13" r="11" stroke="var(--black)" strokeWidth="2" fill="none" />

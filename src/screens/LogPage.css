@@ -14,31 +14,35 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   flex-shrink: 0;
 }
 
-.log-title-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-}
-
+/* The info button sits inline at the very end of the name, so it follows the
+   last word (even when the name wraps). The right margin keeps the name block
+   (and so the button) at least this far from the close button; if the button
+   wouldn't fit before that point it drops to the next line instead. */
 .log-title {
+  flex: 1;
+  min-width: 0;
+  margin-right: 48px;
   font-size: 26px;
   font-weight: 800;
+  line-height: 1.25;
   text-align: left;
 }
 
 .log-info-button {
+  display: inline-block;
+  vertical-align: -5px;
   width: 26px;
   height: 26px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 0;
+  margin-left: 2px;
+}
+
+.log-info-button svg {
+  display: block;
 }
 
 .log-close {

@@ -79,6 +79,17 @@ export default function Tally() {
 
       <WeekRow />
 
+      <div className="tally-bottom-pair">
+        <div className="tally-card tally-half-card">
+          <div className="tally-card-title" style={{ color: 'var(--color-streak-card)' }}>Current Streak</div>
+          <div className="tally-big-stat">{streak} days</div>
+        </div>
+        <div className="tally-card tally-half-card">
+          <div className="tally-card-title" style={{ color: 'var(--color-days-logged-card)' }}>Days Logged</div>
+          <div className="tally-big-stat">{daysLogged} days</div>
+        </div>
+      </div>
+
       <div className="tally-card">
         <div className="tally-card-header">
           <div className="tally-card-title" style={{ color: 'var(--color-pr-card)' }}>Recent PRs</div>
@@ -141,17 +152,6 @@ export default function Tally() {
         </div>
         <div className="tally-gauge-caption">
           Total Weight Lifted (Compared to a {comparisonObject.name})
-        </div>
-      </div>
-
-      <div className="tally-bottom-pair">
-        <div className="tally-card tally-half-card">
-          <div className="tally-card-title" style={{ color: 'var(--color-streak-card)' }}>Current Streak</div>
-          <div className="tally-big-stat">{streak} days</div>
-        </div>
-        <div className="tally-card tally-half-card">
-          <div className="tally-card-title" style={{ color: 'var(--color-days-logged-card)' }}>Days Logged</div>
-          <div className="tally-big-stat">{daysLogged} days</div>
         </div>
       </div>
 

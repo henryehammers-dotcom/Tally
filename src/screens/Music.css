@@ -53,14 +53,17 @@
 .music-card-list {
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 30px;
+  /* Inset from the page edges (on top of .screen's own 20px), close to the
+     divider's inset, so the cards never touch the sides. */
+  padding: 0 26px;
 }
 
 .music-card {
   background: white;
   box-shadow: 6px 8px 16px rgba(35, 31, 32, 0.28);
   border-radius: 14px;
-  padding: 42px 20px;
+  padding: 52px 16px;
   text-align: center;
   border: 2px solid transparent;
   width: 100%;
@@ -72,7 +75,7 @@
 
 .music-composer-name {
   font-weight: 900;
-  font-size: 34px;
+  font-size: clamp(26px, 8vw, 34px);
   line-height: 1.1;
 }
 
